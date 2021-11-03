@@ -96,9 +96,9 @@ public class PlayerShoot : MonoBehaviour
     {
         fired = true;
         var direction = GetComponentInChildren<MouseLook>().GetDirection();
-        var shellInstance = Instantiate(currentSnowBall, launchPos.position, direction);
+        var snowBall = Instantiate(currentSnowBall, launchPos.position, direction);
         launchPos.rotation = direction;
-        shellInstance.velocity = launchPos.forward * currentLaunchForce;
+        snowBall.velocity = launchPos.forward * currentLaunchForce;
 
         currentLaunchForce = minLaunchForce;
         nbSnowBallCreated--;

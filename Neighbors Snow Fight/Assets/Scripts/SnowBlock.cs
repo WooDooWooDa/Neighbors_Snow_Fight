@@ -19,9 +19,8 @@ public class SnowBlock : MonoBehaviour
     {
         Destroy(parent.GetChild(0).gameObject);
         hitPoint += dmg;
-        if (hitPoint > maxHitPoint) {
-            Destroy(gameObject);
-            return;
+        if (hitPoint >= maxHitPoint) {
+            Destroy(parent.gameObject);
         } else {
             SpawnBlock();
         }
@@ -31,7 +30,12 @@ public class SnowBlock : MonoBehaviour
     {
         var block = Instantiate(snowBlockStates[hitPoint]);
         block.transform.SetParent(parent);
-        block.transform.localPosition = Vector3.zero;
+        if (hitPoint == 0) {
+            block.transform.localPosition = Vector3.zero;
+        } else {
+            block.transform.localPosition = new Vector3(0, -0.8f, 0.1f);
+            block.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        }
     }
 
 }

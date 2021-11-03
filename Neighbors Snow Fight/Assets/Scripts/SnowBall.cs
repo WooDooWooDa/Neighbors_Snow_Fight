@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ public class SnowBall : MonoBehaviour
 
     [SerializeField] private int hitPoint = 1;
 
+    private PlayerShoot launcher;
+
+    public void SetLauncher(PlayerShoot playerShoot)
+    {
+        launcher = playerShoot;
+    }
 
     void Start()
     {
@@ -20,11 +27,13 @@ public class SnowBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == ground) {
-
-        } else if (collision.gameObject.layer == playerLayer) {
+        if ((ground.value & (1 << collision.gameObject.layer)) > 0) {
+            Debug.Log("Snow Ball hit ground");
+        } else if ((playerLayer.value & 1 << collision.gameObject.layer) > 0) {
             //knock player
-        } else if (collision.gameObject.layer == snowBlockLayer) {
+            Debug.Log("Snow Ball hit player");
+        } else if ((snowBlockLayer.value & 1 << collision.gameObject.layer) > 0) {
+            Debug.Log("Snow Ball hit snow block");
             collision.gameObject.GetComponent<SnowBlock>().DamageBlock(hitPoint);
         }
     }
