@@ -29,12 +29,15 @@ public class SnowGauge : MonoBehaviour
     public void AddSnow(int layer)
     {
         snowGaugeValue += layer;
+        if (snowGaugeValue > maxSnowGauge) {
+            snowGaugeValue = maxSnowGauge;
+        }
     }
 
     public void UseSnow(int layer)
     {
         snowGaugeValue -= layer;
-        if (snowGaugeValue <= 0) {
+        if (snowGaugeValue < 0) {
             snowGaugeValue = 0;
         }
     }
@@ -42,5 +45,10 @@ public class SnowGauge : MonoBehaviour
     public bool CanReload()
     {
         return snowGaugeValue > 0;
+    }
+
+    public bool IsFull()
+    {
+        return snowGaugeValue == maxSnowGauge;
     }
 }

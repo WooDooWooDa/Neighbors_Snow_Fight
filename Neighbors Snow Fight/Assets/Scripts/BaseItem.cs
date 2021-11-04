@@ -7,36 +7,29 @@ public abstract class BaseItem : MonoBehaviour
 {
     [SerializeField] private float baseTime;
 
-    private PlayerItem playerItem;
+    protected PlayerItem playerItem;
 
     private float timeLeft;
     private bool hasBeenActivated;
 
+    protected bool effectIsDone = false;
+
     void Start()
     {
         timeLeft = baseTime;
-        Destroy(gameObject, 15);
+        StartCoroutine(DestroyAfter15());
     }
 
-    private void Update()
+    public void Update()
     {
         if (hasBeenActivated) {
+            UpdateItem(playerItem);
             LowerTime();
-
-            if (timeLeft == 0) {
+            if (timeLeft == 0 || effectIsDone) {
                 EndEffect(playerItem);
                 Destroy(gameObject);
             }
         }
-    }
-
-    public abstract void ApplyEffect(PlayerItem playerItem);
-
-    public abstract void EndEffect(PlayerItem playerItem);
-
-    public string GetTimeLeft()
-    {
-        return timeLeft.ToString("0");
     }
 
     public void Activate(PlayerItem playerItem)
@@ -44,6 +37,22 @@ public abstract class BaseItem : MonoBehaviour
         this.playerItem = playerItem;
         hasBeenActivated = true;
         ApplyEffect(playerItem);
+    }
+
+    public abstract void UpdateItem(PlayerItem playerItem);
+
+    public abstract void ApplyEffect(PlayerItem playerItem);
+
+    public abstract void EndEffect(PlayerItem playerItem);
+
+    public float GetTimeLeft()
+    {
+        return timeLeft;
+    }
+
+    public bool EffectIsDone()
+    {
+        return effectIsDone;
     }
 
     public bool HasBeenActivated()
@@ -57,5 +66,16 @@ public abstract class BaseItem : MonoBehaviour
         if (timeLeft <= 0) {
             timeLeft = 0;
         }
+    }
+
+    private IEnumerator DestroyAfter15()
+    {
+        yield return new WaitForSeconds(15);
+        Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(DestroyAfter15());
     }
 }

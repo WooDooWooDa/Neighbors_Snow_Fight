@@ -29,7 +29,7 @@ public class SnowBall : MonoBehaviour
     {
         if ((ground.value & (1 << collision.gameObject.layer)) > 0) {
             Debug.Log("Snow Ball hit ground");
-        } else if ((playerLayer.value & 1 << collision.gameObject.layer) > 0) {
+        } else if ((playerLayer.value & 1 << collision.gameObject.layer) > 0 && collision.gameObject.GetComponent<PlayerShoot>() != launcher) {
             //knock player
             Debug.Log("Snow Ball hit player");
         } else if ((snowBlockLayer.value & 1 << collision.gameObject.layer) > 0) {

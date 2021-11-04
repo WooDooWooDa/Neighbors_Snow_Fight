@@ -12,9 +12,14 @@ public class MouseLook : MonoBehaviour
 
     private float xRotation;
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
     public Quaternion GetDirection()
     {
-        return transform.rotation.normalized;
+        return transform.rotation;
     }
 
     void Start()

@@ -27,7 +27,12 @@ public class PlayerShoot : MonoBehaviour
 
     public void ReplaceBall(Rigidbody newBall)
     {
-        currentSnowBall = newBall;
+        currentSnowBall = newBall != null ? newBall : baseSnowBall;
+    }
+
+    public bool HasBall()
+    {
+        return nbSnowBallCreated > 0;
     }
 
     private void OnEnable()
@@ -69,13 +74,11 @@ public class PlayerShoot : MonoBehaviour
         gauge.UseSnow(1);
         nbSnowBallCreated = maxSnowBall;
         GetComponent<PlayerMouvement>().SetSpeed(1f);
-
-        currentSnowBall = baseSnowBall;
     }
 
     private void UpdateAndHandleShootingState()
     {
-        if (!CanLaunch()) return;
+        if (!HasBall()) return;
 
         if (currentLaunchForce >= maxLaunchForce && !fired) {
             currentLaunchForce = maxLaunchForce;
@@ -105,10 +108,5 @@ public class PlayerShoot : MonoBehaviour
         nbSnowBallCreated--;
         Debug.Log("Ball Left : " + nbSnowBallCreated);
         aimSlider.gameObject.SetActive(false);
-    }
-
-    private bool CanLaunch()
-    {
-        return nbSnowBallCreated > 0;
     }
 }

@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 1442361173}
   - component: {fileID: 2063189500}
   - component: {fileID: 2063189507}
+  - component: {fileID: 1401976678}
   m_Layer: 3
   m_Name: Character_red
   m_TagString: Player
@@ -315,6 +316,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+--- !u!114 &1401976678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4436386201885349399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e862a7fa0f83d42beeccd5e7229106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpRange: 5
+  delay: 1
 --- !u!1 &4436386202112943553
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,11 +681,6 @@ PrefabInstance:
       objectReference: {fileID: 3978456436811466606}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ddac75f7e392454fb953168c021c56f, type: 3}
---- !u!224 &5630877197665102288 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7243210092019781701, guid: 1ddac75f7e392454fb953168c021c56f, type: 3}
-  m_PrefabInstance: {fileID: 3071993472974190997}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2188552425084143669 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3818671075102044576, guid: 1ddac75f7e392454fb953168c021c56f, type: 3}
@@ -704,6 +714,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5630877197665102288 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7243210092019781701, guid: 1ddac75f7e392454fb953168c021c56f, type: 3}
+  m_PrefabInstance: {fileID: 3071993472974190997}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3767269242543928738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2227573874892213303, guid: 1ddac75f7e392454fb953168c021c56f, type: 3}
