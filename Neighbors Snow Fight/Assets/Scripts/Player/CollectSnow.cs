@@ -10,6 +10,9 @@ public class CollectSnow : MonoBehaviour
     private float elapsed;
     private float pickUpDelay;
 
+    public delegate void playerCollectSnowDelegate(CollectSnow p);
+    public event playerCollectSnowDelegate PlayerCollectSnow;
+
     public void SetDelay(float pourcentage)
     {
         pickUpDelay = basePickUpDelay * pourcentage;
@@ -42,6 +45,7 @@ public class CollectSnow : MonoBehaviour
                 if (!gauge.IsFull()) {
                     layer.Take();
                     gauge.AddSnow(1);
+                    PlayerCollectSnow?.Invoke(this);
                 }
             }
         }

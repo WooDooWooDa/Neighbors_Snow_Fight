@@ -22,7 +22,7 @@ public class PlayerItem : MonoBehaviour
             if (!item.HasBeenActivated())
                 item.Activate(this);
             item.Update();
-            if (item.GetTimeLeft() <= 0f || item.EffectIsDone())
+            if (item.GetTimeLeft() <= 0f || item.EffectIsDone() || item == null)
                 removed.Add(item);
         }
         if (removed.Count > 0)
@@ -44,3 +44,4 @@ public class PlayerItem : MonoBehaviour
         }
     }
 }
+

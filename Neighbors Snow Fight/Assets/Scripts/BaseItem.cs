@@ -6,13 +6,14 @@ using UnityEngine;
 public abstract class BaseItem : MonoBehaviour
 {
     [SerializeField] private float baseTime;
+    [SerializeField] private Rarity rarity;
 
     protected PlayerItem playerItem;
+    protected bool effectIsDone = false;
+    protected bool isSuper = false;
 
     private float timeLeft;
     private bool hasBeenActivated;
-
-    protected bool effectIsDone = false;
 
     void Start()
     {
@@ -23,10 +24,11 @@ public abstract class BaseItem : MonoBehaviour
     public void Update()
     {
         if (hasBeenActivated) {
-            UpdateItem(playerItem);
+            UpdateItem();
             LowerTime();
             if (timeLeft == 0 || effectIsDone) {
-                EndEffect(playerItem);
+                EndEffect();
+                effectIsDone = true;
                 Destroy(gameObject);
             }
         }
@@ -36,14 +38,14 @@ public abstract class BaseItem : MonoBehaviour
     {
         this.playerItem = playerItem;
         hasBeenActivated = true;
-        ApplyEffect(playerItem);
+        ApplyEffect();
     }
 
-    public abstract void UpdateItem(PlayerItem playerItem);
+    public abstract void UpdateItem();
 
-    public abstract void ApplyEffect(PlayerItem playerItem);
+    public abstract void ApplyEffect();
 
-    public abstract void EndEffect(PlayerItem playerItem);
+    public abstract void EndEffect();
 
     public float GetTimeLeft()
     {
@@ -77,5 +79,13 @@ public abstract class BaseItem : MonoBehaviour
     private void OnDisable()
     {
         StopCoroutine(DestroyAfter15());
+    }
+
+    private enum Rarity
+    {
+        Common,
+        Uncommon,
+        Rare,
+        Unique
     }
 }

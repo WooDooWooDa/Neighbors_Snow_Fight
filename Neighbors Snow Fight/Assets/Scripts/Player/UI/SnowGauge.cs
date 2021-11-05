@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class SnowGauge : MonoBehaviour
 {
     [SerializeField] private Slider gaugeSlider;
+
     [SerializeField] private TextMeshProUGUI ballAvailable;
 
     private int snowGaugeValue = 0;
@@ -24,6 +25,11 @@ public class SnowGauge : MonoBehaviour
     {
         gaugeSlider.value = snowGaugeValue;
         ballAvailable.text = (snowGaugeValue * 3).ToString();
+    }
+
+    public void Fill()
+    {
+        snowGaugeValue = maxSnowGauge;
     }
 
     public void AddSnow(int layer)

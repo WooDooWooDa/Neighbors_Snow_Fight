@@ -21,9 +21,28 @@ public class PlayerShoot : MonoBehaviour
     private float currentLaunchForce;
     private float chargeSpeed;
 
-    private int maxSnowBall = 3;
-    private int nbSnowBallCreated = 0;
+    private int baseMaxSnowBall = 3;
+    private int maxSnowBall;
+    private int nbSnowBallCreated = 0;      // --> munitions
     private Rigidbody currentSnowBall;
+
+    private bool hasMold = false;
+
+    public delegate void playerReloadDelegate(PlayerShoot p);
+    public event playerReloadDelegate PlayerReload;
+
+    public void ChangeMaxBalls(bool useBase, int amount = 0)
+    {
+        if (useBase)
+            maxSnowBall = baseMaxSnowBall;
+        else
+            maxSnowBall = amount;
+    }
+
+    public void UseMold(bool use)
+    {
+        hasMold = use;
+    }
 
     public void ReplaceBall(Rigidbody newBall)
     {
@@ -47,7 +66,8 @@ public class PlayerShoot : MonoBehaviour
         aimSlider.minValue = minLaunchForce;
         aimSlider.maxValue = maxLaunchForce;
         aimSlider.gameObject.SetActive(false);
-        nbSnowBallCreated = 3;
+        //nbSnowBallCreated = 3;
+        maxSnowBall = baseMaxSnowBall;
     }
 
     void Update()
@@ -61,15 +81,19 @@ public class PlayerShoot : MonoBehaviour
     }
 
     private IEnumerator Reload()
-    {    
+    {
         var gauge = GetComponent<SnowGauge>();
         if (!gauge.CanReload() || nbSnowBallCreated > 0) {
             MessageAnnoncer.Message = "You can't reload right now, collect snow!";
             yield break;
         }
 
-        GetComponent<PlayerMouvement>().SetSpeed(0.2f);
-        yield return new WaitForSeconds(1.5f);
+        PlayerReload?.Invoke(this);
+
+        if (!hasMold) {
+            GetComponent<PlayerMouvement>().SetSpeed(0.2f);
+            yield return new WaitForSeconds(1.5f);
+        }  
 
         gauge.UseSnow(1);
         nbSnowBallCreated = maxSnowBall;
