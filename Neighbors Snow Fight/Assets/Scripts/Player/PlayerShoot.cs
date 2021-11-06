@@ -66,7 +66,6 @@ public class PlayerShoot : MonoBehaviour
         aimSlider.minValue = minLaunchForce;
         aimSlider.maxValue = maxLaunchForce;
         aimSlider.gameObject.SetActive(false);
-        //nbSnowBallCreated = 3;
         maxSnowBall = baseMaxSnowBall;
     }
 
@@ -107,14 +106,14 @@ public class PlayerShoot : MonoBehaviour
         if (currentLaunchForce >= maxLaunchForce && !fired) {
             currentLaunchForce = maxLaunchForce;
             LaunchBall();
-        } else if (Input.GetKeyDown(KeyCode.Q)) {
+        } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
             fired = false;
             currentLaunchForce = minLaunchForce;
-        } else if (Input.GetKey(KeyCode.Q) && !fired) {
+        } else if (Input.GetKey(KeyCode.Mouse0) && !fired) {
             currentLaunchForce += chargeSpeed * Time.deltaTime;
             aimSlider.gameObject.SetActive(true);
             aimSlider.value = currentLaunchForce;
-        } else if (Input.GetKeyUp(KeyCode.Q) && !fired) {
+        } else if (Input.GetKeyUp(KeyCode.Mouse0) && !fired) {
             LaunchBall();
         }
     }
@@ -130,7 +129,6 @@ public class PlayerShoot : MonoBehaviour
 
         currentLaunchForce = minLaunchForce;
         nbSnowBallCreated--;
-        Debug.Log("Ball Left : " + nbSnowBallCreated);
         aimSlider.gameObject.SetActive(false);
     }
 }

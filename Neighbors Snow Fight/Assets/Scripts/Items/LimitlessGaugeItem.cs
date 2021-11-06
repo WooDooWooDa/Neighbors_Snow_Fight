@@ -11,7 +11,7 @@ public class LimitlessGaugeItem : BaseItem
 
     public override void EndEffect()
     {
-        
+        playerItem.GetComponent<SnowGauge>().Empty();
     }
 
     public override void UpdateItem()

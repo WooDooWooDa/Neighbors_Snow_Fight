@@ -46,16 +46,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dec7a148d2418a48ab363253d6a8c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPoint: 4
+  snowLayer: {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
   snowBlockLayer:
     serializedVersion: 2
     m_Bits: 128
+  snowLayerLayer:
+    serializedVersion: 2
+    m_Bits: 256
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   ground:
     serializedVersion: 2
     m_Bits: 64
-  hitPoint: 4
 --- !u!135 &645023122099753219
 SphereCollider:
   m_ObjectHideFlags: 0

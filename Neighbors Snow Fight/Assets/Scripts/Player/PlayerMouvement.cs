@@ -20,6 +20,12 @@ public class PlayerMouvement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private float speed;
+    private bool isWalking;
+
+    public void SetSpeed(float pourcentage)
+    {
+        speed = baseSpeed * pourcentage;
+    }
 
     private void Awake()
     {
@@ -35,6 +41,7 @@ public class PlayerMouvement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        UpdateAnimator();
 
         if (isGrounded && velocity.y < 0) {
             velocity.y = -2f;
@@ -43,34 +50,41 @@ public class PlayerMouvement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        
-
         Vector3 move = transform.right * z + transform.forward * -x;
+        isWalking = (Vector3.Distance(move, Vector3.zero) > 0);
 
         if (move.z != 0 && head.localRotation.y != 0) {
             transform.Rotate(Vector3.up * head.localRotation.y * 100);
             head.transform.localRotation = Quaternion.identity;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            animator.SetBool("IsWalking", true);
-        } else if (Input.GetKeyUp(KeyCode.Q)) {
-            animator.SetBool("IsWalking", false);
-        }
-
         controller.Move(move * speed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded) {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            Jump();
         }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        UpdateAnimator();
     }
 
-    public void SetSpeed(float pourcentage)
+    private void UpdateAnimator()
     {
-        speed = baseSpeed * pourcentage;
+        if (isGrounded && !isWalking) {
+            animator.SetBool("Walk", false); //return to idle
+        } else if (isWalking) {
+            animator.SetBool("Walk", true);
+            AnimationClip anim = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
+            //Debug.Log(anim);
+        }
+    }
+
+    private void Jump()
+    {
+        animator.SetTrigger("Jump");
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
 }

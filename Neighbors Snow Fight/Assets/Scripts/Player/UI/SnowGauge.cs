@@ -12,6 +12,7 @@ public class SnowGauge : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ballAvailable;
 
     private int snowGaugeValue = 0;
+
     private int maxSnowGauge = 3;
 
     private void Start()
@@ -25,6 +26,10 @@ public class SnowGauge : MonoBehaviour
     {
         gaugeSlider.value = snowGaugeValue;
         ballAvailable.text = (snowGaugeValue * 3).ToString();
+    }
+    public void Empty()
+    {
+        snowGaugeValue = 0;
     }
 
     public void Fill()
@@ -46,6 +51,11 @@ public class SnowGauge : MonoBehaviour
         if (snowGaugeValue < 0) {
             snowGaugeValue = 0;
         }
+    }
+
+    public bool Has(int amount)
+    {
+        return amount <= snowGaugeValue;
     }
 
     public bool CanReload()
