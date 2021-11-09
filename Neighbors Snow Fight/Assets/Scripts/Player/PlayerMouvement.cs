@@ -74,10 +74,13 @@ public class PlayerMouvement : MonoBehaviour
     {
         if (isGrounded && !isWalking) {
             animator.SetBool("Walk", false); //return to idle
-        } else if (isWalking) {
+            animator.SetBool("Sprint", false);
+        } else if (isWalking && speed == baseSpeed) {
+            animator.SetBool("Sprint", false);
             animator.SetBool("Walk", true);
-            AnimationClip anim = animator.GetCurrentAnimatorClipInfo(0)[0].clip;
-            //Debug.Log(anim);
+        } else if (isWalking && speed != baseSpeed) {
+            animator.SetBool("Walk", false);
+            animator.SetBool("Sprint", true);
         }
     }
 

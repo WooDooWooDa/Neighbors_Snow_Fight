@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a3e9c34f48bf641a7cd0ec99c283f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 919132149155446097, guid: 0d1983e643e2b9b469b9f786ad90048a, type: 3}
   baseTime: 10000
   rarity: 1
   bigBallPrefab: {fileID: -2821238635614704531, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}

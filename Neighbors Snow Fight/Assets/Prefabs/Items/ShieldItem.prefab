@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c342e81b176174aba9ae3907b6f1b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 919132149155446097, guid: 4571aa8131e5e9f40863ea68c1215e3c, type: 3}
   baseTime: 8
   rarity: 0
   shield: {fileID: 7702078088149084527, guid: 2f5ddc101558e754f9c69f532733b9c1, type: 3}

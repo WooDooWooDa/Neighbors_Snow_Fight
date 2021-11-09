@@ -6,12 +6,23 @@ public class PlayerItem : MonoBehaviour
 {
     [SerializeField] private List<BaseItem> items = new List<BaseItem>();
 
+    public delegate void playerCollectItemDelegate(PlayerItem p, BaseItem item);
+    public delegate void playerItemRemoveDelegate(PlayerItem p, BaseItem item);
+    public event playerCollectItemDelegate PlayerCollectItem;
+    public event playerItemRemoveDelegate PlayerItemRemove;
+
     private List<BaseItem> removed = new List<BaseItem>();
+
+    public List<BaseItem> GetItems()
+    {
+        return items;
+    }
 
     public void CollectItem(BaseItem item)
     {
         if (items.Count == 2) return;
 
+        PlayerCollectItem?.Invoke(this, item);
         items.Add(item);
         item.gameObject.SetActive(false);
     }
@@ -33,6 +44,7 @@ public class PlayerItem : MonoBehaviour
     {
         foreach (var item in removed) {
             items.Remove(item);
+            PlayerItemRemove?.Invoke(this, item);
         }
         removed.Clear();
     }

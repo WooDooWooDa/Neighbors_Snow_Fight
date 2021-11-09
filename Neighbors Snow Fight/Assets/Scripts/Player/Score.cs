@@ -6,17 +6,16 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI scoreText;
-    private int currentPoints;
+    private float currentPoints;
 
     void Start()
     {
         currentPoints = 0;
     }
 
-    void Update()
+    public float GetScore()
     {
-        //render
+        return currentPoints;
     }
 
     public void AddPoints(int amount)

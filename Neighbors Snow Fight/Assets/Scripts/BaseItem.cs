@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class BaseItem : MonoBehaviour
 {
+    [SerializeField] private GameObject model;
     [SerializeField] private float baseTime;
     [SerializeField] private Rarity rarity;
 
@@ -19,6 +20,11 @@ public abstract class BaseItem : MonoBehaviour
     {
         timeLeft = baseTime;
         StartCoroutine(DestroyAfter15());
+    }
+
+    public GameObject GetModel()
+    {
+        return model;
     }
 
     public void Update()
