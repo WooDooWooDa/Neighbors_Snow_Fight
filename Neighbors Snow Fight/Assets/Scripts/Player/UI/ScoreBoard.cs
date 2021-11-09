@@ -25,7 +25,6 @@ public class ScoreBoard : MonoBehaviour
 
     void Update()
     {
-        //playersScore = GameObject.FindObjectsOfType<Score>();
         foreach (var score in playersScore) {
             if (score == GetComponentInParent<Score>()) {
                 youScore.text = ScoreToString(score.GetScore());

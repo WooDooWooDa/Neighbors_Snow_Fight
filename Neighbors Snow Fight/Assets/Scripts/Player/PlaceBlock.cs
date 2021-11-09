@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlaceBlock : MonoBehaviour
 {
+    [SerializeField] private LayerMask bound;
     [SerializeField] private GameObject snowBlock;
     [SerializeField] private GameObject snowBlockFrame;
 
@@ -52,8 +53,12 @@ public class PlaceBlock : MonoBehaviour
         var direction = GetComponentInChildren<MouseLook>().GetDirection();
         var position = GetComponentInChildren<MouseLook>().GetPosition();
         if(Physics.Raycast(position, direction * Vector3.forward, out RaycastHit hit, dist)) {
-            spawnedFrame.SetActive(true);
-            spawnedFrame.transform.position = hit.point;
+            Debug.LogWarning(hit.collider.gameObject.layer);
+            if (!((bound.value & (1 << hit.collider.gameObject.layer)) > 0)) {
+                spawnedFrame.SetActive(true);
+                spawnedFrame.transform.position = hit.point;
+            } else
+                spawnedFrame.SetActive(false);
         } else { 
             spawnedFrame.SetActive(false);
         }

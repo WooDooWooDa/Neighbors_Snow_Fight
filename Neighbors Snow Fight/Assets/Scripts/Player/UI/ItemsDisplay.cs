@@ -23,7 +23,7 @@ public class ItemsDisplay : MonoBehaviour
         var index = 0;
         foreach (KeyValuePair<ItemSlot, BaseItem> slot in slots)
         {
-            slot.Key.gameObject.transform.localPosition = new Vector3(0, index == 1 ? 100 : 0, 0);
+            slot.Key.gameObject.transform.localPosition = new Vector3(0, index == 1 ? 200 : 100, 0);
             index++;
         }
     }

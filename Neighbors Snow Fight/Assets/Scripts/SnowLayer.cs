@@ -7,7 +7,7 @@ public class SnowLayer : MonoBehaviour
     [SerializeField] private GameObject layerPrefab;
     [SerializeField] private Transform filling;
 
-    private int maxLayers = 6;
+    private int maxLayers = 10;
     private int currentLayers;
 
     void Start()

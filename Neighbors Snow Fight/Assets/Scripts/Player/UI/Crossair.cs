@@ -10,7 +10,7 @@ public class Crossair : MonoBehaviour
 
     private void Start()
     {
-        SetColor(new Color(PlayerPrefs.GetFloat("crossairColorR", 255), PlayerPrefs.GetFloat("crossairColorG", 255), PlayerPrefs.GetFloat("crossairColorB", 255)));
+        SetColor(new Color(PlayerPrefs.GetFloat("crossairColorR", 0), PlayerPrefs.GetFloat("crossairColorG", 0), PlayerPrefs.GetFloat("crossairColorB", 0)));
     }
 
     public void SetColor(Color color)
