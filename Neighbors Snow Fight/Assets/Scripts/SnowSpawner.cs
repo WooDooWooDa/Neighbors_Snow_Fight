@@ -6,15 +6,11 @@ public class SnowSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject snowLayerPrefab;
     [SerializeField] private Transform start;
+    [SerializeField] private GameObject fence;
 
     void Start()
     {
         InitializeSnow();
-    }
-
-    void Update()
-    {
-        
     }
 
     private void InitializeSnow()
@@ -26,5 +22,6 @@ public class SnowSpawner : MonoBehaviour
             }
 
         }
+        fence.SetActive(true);
     }
 }

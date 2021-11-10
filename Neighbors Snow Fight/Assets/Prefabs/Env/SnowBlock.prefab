@@ -96,3 +96,6 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+  block:
+    serializedVersion: 2
+    m_Bits: 128

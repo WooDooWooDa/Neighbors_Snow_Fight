@@ -15,7 +15,7 @@ public class PlaceBlock : MonoBehaviour
     private float dist = 10f;
     private int snowCost = 3;
 
-    private int maxBlocks = 5;
+    private int maxBlocks = 8;
     private int placedBlocks = 0;
 
     void Update()
@@ -35,8 +35,8 @@ public class PlaceBlock : MonoBehaviour
     {
         GetComponent<SnowGauge>().UseSnow(snowCost);
         Transform frame = spawnedFrame.transform;
-        var b = Instantiate(snowBlock, frame.position + (Vector3.up * 1), frame.rotation);
-        SnowBlock block = b.GetComponent<SnowBlock>();
+        SnowBlock block = (Instantiate(snowBlock, frame.position + (Vector3.up * 1), frame.rotation)).GetComponent<SnowBlock>();
+        RandomRotate(block.transform);
         block.SetPlayer(this);
         block.BlockDestroyed += BlockDestroyed;
         ToggleFrame();
@@ -62,6 +62,11 @@ public class PlaceBlock : MonoBehaviour
         } else { 
             spawnedFrame.SetActive(false);
         }
+    }
+
+    private void RandomRotate(Transform block)
+    {
+        block.localRotation = Quaternion.Euler(Random.Range(0, 4) * 90, Random.Range(0, 4) * 90, Random.Range(0, 4) * 90);
     }
 
     private void ToggleFrame()
