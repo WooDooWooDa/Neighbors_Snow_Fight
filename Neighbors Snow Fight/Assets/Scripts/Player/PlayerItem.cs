@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerItem : MonoBehaviour
+public class PlayerItem : NetworkBehaviour
 {
     [SerializeField] private List<BaseItem> items = new List<BaseItem>();
 
@@ -18,17 +19,18 @@ public class PlayerItem : MonoBehaviour
         return items;
     }
 
-    public void CollectItem(BaseItem item)
+    private void CollectItem(BaseItem item)
     {
         if (items.Count == 2) return;
 
         PlayerCollectItem?.Invoke(this, item);
         items.Add(item);
-        item.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        if (!isLocalPlayer) return; // server ?
+
         foreach (BaseItem item in items) {
             if (!item.HasBeenActivated())
                 item.Activate(this);
@@ -49,11 +51,25 @@ public class PlayerItem : MonoBehaviour
         removed.Clear();
     }
 
+    [Server]
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<BaseItem>() != null) {
-            CollectItem(other.GetComponent<BaseItem>());
+            RpcCollectItem(this.GetComponent<NetworkIdentity>().connectionToClient, other.GetComponent<BaseItem>());
+            RpcDesactiveItem(other.gameObject);
         }
+    }
+
+    [ClientRpc]
+    private void RpcDesactiveItem(GameObject item)
+    {
+        item.gameObject.SetActive(false);
+    }
+
+    [TargetRpc]
+    private void RpcCollectItem(NetworkConnection conn, BaseItem item)
+    {
+        CollectItem(item);
     }
 }
 

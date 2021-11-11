@@ -5,6 +5,9 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+#parrel clones
+*_clone_*
+
 # Visual Studio cache directory
 .vs/
 

@@ -47,10 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec09d15934795e54e9548c6d08bf26a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   model: {fileID: 919132149155446097, guid: 53d8bd8fc673a1343b825b61f8272e1c, type: 3}
-  baseTime: 0
-  rarity: 0
-  snowGolem: {fileID: 0}
+  baseTime: 10000
+  rarity: 3
+  snowGolem: {fileID: 1281196632999510349, guid: 14d7106411b84844fbb68a1fe51e8665, type: 3}
 --- !u!54 &6487878536509776635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -91,8 +93,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.65, y: 0.1, z: 0.65}
-  m_Center: {x: 0, y: 0.05, z: 0}
+  m_Size: {x: 0.65, y: 0.2, z: 0.65}
+  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!95 &6487878536509776637
 Animator:
   serializedVersion: 3

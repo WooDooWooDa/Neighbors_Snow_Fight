@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMouvement : MonoBehaviour
+public class PlayerMouvement : NetworkBehaviour
 {
     [SerializeField] private Transform head;
 
@@ -40,6 +41,8 @@ public class PlayerMouvement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         UpdateAnimator();
 

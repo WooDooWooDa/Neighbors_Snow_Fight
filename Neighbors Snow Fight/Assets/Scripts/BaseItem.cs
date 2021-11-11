@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseItem : MonoBehaviour
+public abstract class BaseItem : NetworkBehaviour
 {
     [SerializeField] private GameObject model;
     [SerializeField] private float baseTime;
