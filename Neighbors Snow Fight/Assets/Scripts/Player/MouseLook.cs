@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField] private float mouseSensititvity = 100f;
+    [SerializeField] private float mouseSensititvity = 500f;
     [SerializeField] private float originY = 90f;
-    [SerializeField] private Transform playerBody;
-    [SerializeField] private Transform headParent;
-    [SerializeField] private Transform head;
+    [SerializeField] public Transform playerBody;
+    [SerializeField] public Transform headParent;
+    [SerializeField] public Transform headModel;
 
     private float xRotation;
 
@@ -37,7 +37,7 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation, originY, 0f);
-        head.localRotation = Quaternion.Euler(-xRotation, -originY, 0f);
+        headModel.localRotation = Quaternion.Euler(-xRotation, -originY, 0f);
 
         headParent.Rotate(Vector3.up * mouseX);
         if (headParent.transform.localRotation.y > 0.3 || headParent.transform.localRotation.y < -0.3) {
