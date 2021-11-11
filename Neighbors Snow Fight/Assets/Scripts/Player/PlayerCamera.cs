@@ -12,7 +12,6 @@ public class PlayerCamera : MonoBehaviour
         NetworkIdentity identity = GetComponent<NetworkIdentity>();
         if (!identity.isLocalPlayer)
             Destroy(playerCamera);
-
     }
 
 }
