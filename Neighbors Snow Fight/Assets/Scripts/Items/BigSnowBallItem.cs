@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BigSnowBallItem : BaseItem
 {
-    [SerializeField] private Rigidbody bigBallPrefab;
+    [SerializeField] private GameObject bigBallPrefab;
 
     public override void UpdateItem()
     {

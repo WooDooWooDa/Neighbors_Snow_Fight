@@ -327,7 +327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d886dd5076db3b1428450a5edf3538e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSnowBall: {fileID: 208843253753481880, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
+  syncMode: 0
+  syncInterval: 0.1
+  baseSnowBall: {fileID: 208843253753481860, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
   launchPos: {fileID: 1193735398}
   aimSlider: {fileID: 7259307437973001325}
   ballsCreated: {fileID: 1528205152798315351}

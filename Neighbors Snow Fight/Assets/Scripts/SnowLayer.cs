@@ -1,13 +1,15 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnowLayer : MonoBehaviour
+public class SnowLayer : NetworkBehaviour
 {
     [SerializeField] private GameObject layerPrefab;
     [SerializeField] private Transform filling;
 
     private int maxLayers = 10;
+    [SyncVar]
     private int currentLayers;
 
     void Start()
@@ -35,6 +37,6 @@ public class SnowLayer : MonoBehaviour
     {
         currentLayers--;
         if (currentLayers == 0)
-            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
     }
 }

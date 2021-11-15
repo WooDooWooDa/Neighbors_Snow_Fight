@@ -506,6 +506,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6031274956400429555, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
+      propertyPath: sceneId
+      value: 3785998631
+      objectReference: {fileID: 0}
     - target: {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
       propertyPath: m_Name
       value: SnowLayer (1)
@@ -838,7 +842,19 @@ MonoBehaviour:
   playerPrefab: {fileID: 4436386201885349399, guid: 5dfc0a249e683f44997f58efdf52e095, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 3587089391968711482, guid: 05ca7d43ac0976740aa257a2382ed7c4, type: 3}
+  - {fileID: 1587030568101803722, guid: 0518fbcf82f30444ba814cd0a666c702, type: 3}
+  - {fileID: 1482160272997458610, guid: d39fc5cfd78b37d48b0d84daabcff375, type: 3}
+  - {fileID: 387760338555888922, guid: 938cc13dff3c7ce438144a0f538dfeae, type: 3}
+  - {fileID: 5394591008748509995, guid: 061b7f62322cba843b82f7b8f8f68a15, type: 3}
+  - {fileID: 685053345785349044, guid: 63963e0dc9bc7934abb0f8b6f6338354, type: 3}
+  - {fileID: 4383698760584227054, guid: 2fa244a4647de8c45b5b19c33954225d, type: 3}
+  - {fileID: 3987830856971460964, guid: 0e99c066476d0bc4f93b8ad89d811da6, type: 3}
+  - {fileID: 208843253753481860, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
+  - {fileID: 645023122099753340, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
+  - {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
+  - {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
 --- !u!4 &810970048
 Transform:
   m_ObjectHideFlags: 0
@@ -989,6 +1005,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1789749582931289194, guid: e27adce6110677b4d82d3f193661d187, type: 3}
+      propertyPath: sceneId
+      value: 1725212204
+      objectReference: {fileID: 0}
     - target: {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
       propertyPath: m_Name
       value: SnowBlock (1)
@@ -1545,6 +1565,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6363839228818699399, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
+      propertyPath: sceneId
+      value: 3364504158
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
 --- !u!1001 &387760338043342891
@@ -1662,6 +1686,10 @@ PrefabInstance:
     - target: {fileID: 645023122099753340, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
       propertyPath: m_Name
       value: BigSnowBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763588312523912750, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
+      propertyPath: sceneId
+      value: 1210006031
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
@@ -1977,6 +2005,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1789749582931289194, guid: e27adce6110677b4d82d3f193661d187, type: 3}
+      propertyPath: sceneId
+      value: 3505882121
+      objectReference: {fileID: 0}
     - target: {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
       propertyPath: m_Name
       value: SnowBlock
@@ -2156,9 +2188,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6031274956400429555, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
+      propertyPath: sceneId
+      value: 4251088745
+      objectReference: {fileID: 0}
     - target: {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
       propertyPath: m_Name
       value: SnowLayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346000117616226060, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 8346000117616226063, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
       propertyPath: m_RootOrder

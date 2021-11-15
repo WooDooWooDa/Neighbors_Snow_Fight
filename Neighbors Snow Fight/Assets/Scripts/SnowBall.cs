@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnowBall : MonoBehaviour
+public class SnowBall : NetworkBehaviour
 {
     [SerializeField] private int hitPoint = 1;
     [SerializeField] private GameObject snowLayer;
@@ -28,6 +29,7 @@ public class SnowBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.GetComponent<PlayerShoot>() == launcher) return;
 
         if (HitThisLayer(ground, collision)) {
@@ -49,8 +51,8 @@ public class SnowBall : MonoBehaviour
     private void HitGround(Collision collision)
     {
         if (UnityEngine.Random.Range(0, 100) < 20)
-            Instantiate(snowLayer, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+            NetworkServer.Spawn(Instantiate(snowLayer, transform.position, Quaternion.identity));
+        NetworkServer.Destroy(gameObject);
     }
 
     private void HitPlayer(Collision collision)
@@ -69,7 +71,7 @@ public class SnowBall : MonoBehaviour
     {
         if (UnityEngine.Random.Range(0, 100) < 20)
             collision.gameObject.GetComponent<SnowLayer>().AddSnow(1);
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     }
 
 }

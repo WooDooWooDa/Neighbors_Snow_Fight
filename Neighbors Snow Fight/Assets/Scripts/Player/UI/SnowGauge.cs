@@ -27,6 +27,7 @@ public class SnowGauge : MonoBehaviour
         gaugeSlider.value = snowGaugeValue;
         ballAvailable.text = (snowGaugeValue * 3).ToString();
     }
+
     public void Empty()
     {
         snowGaugeValue = 0;

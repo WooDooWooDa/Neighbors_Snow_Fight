@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,9 +6,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : NetworkBehaviour
 {
-    [SerializeField] private Rigidbody baseSnowBall;
+    [SerializeField] private GameObject baseSnowBall;
     [SerializeField] private Transform launchPos;
 
     [Header("UI")]
@@ -24,7 +25,7 @@ public class PlayerShoot : MonoBehaviour
     private int baseMaxSnowBall = 3;
     private int maxSnowBall;
     private int nbSnowBallCreated = 0;      // --> munitions
-    private Rigidbody currentSnowBall;
+    private GameObject currentSnowBall;
 
     private bool hasMold = false;
 
@@ -44,7 +45,7 @@ public class PlayerShoot : MonoBehaviour
         hasMold = use;
     }
 
-    public void ReplaceBall(Rigidbody newBall)
+    public void ReplaceBall(GameObject newBall)
     {
         currentSnowBall = newBall != null ? newBall : baseSnowBall;
     }
@@ -71,6 +72,8 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         aimSlider.value = minLaunchForce;
         ballsCreated.text = nbSnowBallCreated.ToString();
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -103,9 +106,10 @@ public class PlayerShoot : MonoBehaviour
     {
         if (!HasBall()) return;
 
+        var direction = GetComponentInChildren<MouseLook>().GetDirection();
         if (currentLaunchForce >= maxLaunchForce && !fired) {
             currentLaunchForce = maxLaunchForce;
-            LaunchBall();
+            CmdLaunchBall(direction);
         } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
             fired = false;
             currentLaunchForce = minLaunchForce;
@@ -114,21 +118,29 @@ public class PlayerShoot : MonoBehaviour
             aimSlider.gameObject.SetActive(true);
             aimSlider.value = currentLaunchForce;
         } else if (Input.GetKeyUp(KeyCode.Mouse0) && !fired) {
-            LaunchBall();
+            CmdLaunchBall(direction);
         }
     }
 
-    private void LaunchBall()
+    [Command]
+    private void CmdLaunchBall(Quaternion direction)
+    {
+        RpcLaunchBall(direction);
+    }
+
+    [ClientRpc]
+    private void RpcLaunchBall(Quaternion direction)
     {
         fired = true;
-        var direction = GetComponentInChildren<MouseLook>().GetDirection();
-        var snowBall = Instantiate(currentSnowBall, launchPos.position, direction);
         launchPos.rotation = direction;
+        GameObject snowBall = Instantiate(currentSnowBall, launchPos.position, direction);
+
         snowBall.GetComponent<SnowBall>().SetLauncher(this);
-        snowBall.velocity = launchPos.forward * currentLaunchForce;
+        snowBall.GetComponent<Rigidbody>().velocity = launchPos.forward * currentLaunchForce;
 
         currentLaunchForce = minLaunchForce;
         nbSnowBallCreated--;
-        aimSlider.gameObject.SetActive(false);
+        if (aimSlider != null)
+            aimSlider.gameObject.SetActive(false);
     }
 }

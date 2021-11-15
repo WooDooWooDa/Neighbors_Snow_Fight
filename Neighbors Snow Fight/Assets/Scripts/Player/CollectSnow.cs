@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectSnow : MonoBehaviour
+public class CollectSnow : NetworkBehaviour
 {
     [SerializeField] private float pickUpRange = 10f;
     [SerializeField] private float basePickUpDelay = 0.5f;
@@ -25,6 +26,8 @@ public class CollectSnow : MonoBehaviour
 
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         elapsed += Time.deltaTime;
         if (elapsed >= pickUpDelay && Input.GetKeyDown(KeyCode.Mouse1)) {
             elapsed = 0;
