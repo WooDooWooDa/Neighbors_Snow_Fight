@@ -33,6 +33,7 @@ public class SnowLayer : NetworkBehaviour
             currentLayers = maxLayers;
     }
 
+    [Server]
     public void Take()
     {
         currentLayers--;

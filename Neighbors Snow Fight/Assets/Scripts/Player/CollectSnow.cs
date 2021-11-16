@@ -8,7 +8,9 @@ public class CollectSnow : NetworkBehaviour
     [SerializeField] private float pickUpRange = 10f;
     [SerializeField] private float basePickUpDelay = 0.5f;
 
+    [SyncVar]
     private float elapsed;
+    [SyncVar]
     private float pickUpDelay;
 
     public delegate void playerCollectSnowDelegate(CollectSnow p);
@@ -31,26 +33,32 @@ public class CollectSnow : NetworkBehaviour
         elapsed += Time.deltaTime;
         if (elapsed >= pickUpDelay && Input.GetKeyDown(KeyCode.Mouse1)) {
             elapsed = 0;
-            PickUp();
+            var look = GetComponentInChildren<MouseLook>();
+            CmdPickUp(look.GetDirection(), look.GetPosition());
         }
     }
 
-    private void PickUp()
+    [Command]
+    private void CmdPickUp(Quaternion direction, Vector3 position)
     {
-        var direction = GetComponentInChildren<MouseLook>().GetDirection();
-        var position = GetComponentInChildren<MouseLook>().GetPosition();
-        Debug.DrawRay(position, direction * Vector3.forward * pickUpRange, Color.green, 5);
+        //Debug.DrawRay(position, direction * Vector3.forward * pickUpRange, Color.green, 5);
         if (Physics.Raycast(position, direction * Vector3.forward, out RaycastHit hit, pickUpRange)) {
-            Debug.DrawRay(position, direction * Vector3.forward * hit.distance, Color.red, 5);
+            //Debug.DrawRay(position, direction * Vector3.forward * hit.distance, Color.red, 5);
             SnowLayer layer = hit.transform.GetComponent<SnowLayer>();
             if (layer != null) {
                 SnowGauge gauge = GetComponent<SnowGauge>();
                 if (!gauge.IsFull()) {
                     layer.Take();
-                    gauge.AddSnow(1);
-                    PlayerCollectSnow?.Invoke(this);
+                    GetComponent<SnowGauge>().AddSnow(1);
+                    RpcTakeSnow(GetComponent<NetworkIdentity>().connectionToServer);
                 }
             }
         }
+    }
+
+    [TargetRpc]
+    private void RpcTakeSnow(NetworkConnection conn)
+    {
+        PlayerCollectSnow?.Invoke(this);
     }
 }

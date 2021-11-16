@@ -23,7 +23,7 @@ public class ItemsDisplay : MonoBehaviour
         var index = 0;
         foreach (KeyValuePair<ItemSlot, BaseItem> slot in slots)
         {
-            slot.Key.gameObject.transform.localPosition = new Vector3(0, index == 1 ? 200 : 100, 0);
+            slot.Key.gameObject.transform.localPosition = new Vector3(0, index == 1 ? 100 : 0, 0);
             index++;
         }
     }
@@ -37,9 +37,9 @@ public class ItemsDisplay : MonoBehaviour
 
     private void RemoveItem(PlayerItem playerItem, BaseItem item)
     {
-        foreach (KeyValuePair<ItemSlot, BaseItem> slot in slots)
-        {
+        foreach (KeyValuePair<ItemSlot, BaseItem> slot in slots) {
             if (slot.Value == item) {
+                Debug.Log("Destroying item slot");
                 Destroy(slot.Key.gameObject);
                 slots.Remove(slot.Key);
             }

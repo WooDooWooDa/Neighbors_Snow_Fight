@@ -29,7 +29,8 @@ public class SnowBall : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
+        if (!isServer) return;
+
         if (collision.gameObject.GetComponent<PlayerShoot>() == launcher) return;
 
         if (HitThisLayer(ground, collision)) {
@@ -58,6 +59,7 @@ public class SnowBall : NetworkBehaviour
     private void HitPlayer(Collision collision)
     {
         collision.gameObject.GetComponent<PlayerHealth>().Hit(hitPoint);
+        NetworkServer.Destroy(gameObject);
     }
 
     private void HitBlock(Collision collision)

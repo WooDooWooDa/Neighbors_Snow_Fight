@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,12 +6,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SnowGauge : MonoBehaviour
+public class SnowGauge : NetworkBehaviour
 {
     [SerializeField] private Slider gaugeSlider;
 
     [SerializeField] private TextMeshProUGUI ballAvailable;
 
+    [SyncVar]
     private int snowGaugeValue = 0;
 
     private int maxSnowGauge = 3;
@@ -38,6 +40,7 @@ public class SnowGauge : MonoBehaviour
         snowGaugeValue = maxSnowGauge;
     }
 
+    [Server]
     public void AddSnow(int layer)
     {
         snowGaugeValue += layer;
@@ -46,6 +49,7 @@ public class SnowGauge : MonoBehaviour
         }
     }
 
+    [Server]
     public void UseSnow(int layer)
     {
         snowGaugeValue -= layer;

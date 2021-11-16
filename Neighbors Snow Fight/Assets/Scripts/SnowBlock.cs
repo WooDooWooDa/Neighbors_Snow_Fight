@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnowBlock : MonoBehaviour
+public class SnowBlock : NetworkBehaviour
 {
     [SerializeField] List<GameObject> snowBlockStates;
     [SerializeField] Transform parent;
@@ -11,7 +12,7 @@ public class SnowBlock : MonoBehaviour
     public delegate void playerBlockDestroyedDelegate(SnowBlock p);
     public event playerBlockDestroyedDelegate BlockDestroyed;
 
-    private PlaceBlock player;
+    private NetworkIdentity player;
 
     private int maxHitPoint = 4;
     private int hitPoint = 0;
@@ -23,30 +24,35 @@ public class SnowBlock : MonoBehaviour
 
     private void Update()
     {
+        if (!isServerOnly) return;
+
         if (hitPoint >= maxHitPoint) {
-            Destroy(parent.gameObject);
-            BlockDestroyed?.Invoke(this);
+            RpcBlockDestroyed(player.GetComponent<NetworkIdentity>().connectionToServer); // RPC cant be called because conn is null ???
+            NetworkServer.Destroy(parent.gameObject);
         }
     }
 
     public bool BelongsTo(PlayerShoot launcher)
     {
-        return player == launcher.GetComponent<PlaceBlock>();
+        return player == launcher.GetComponent<NetworkIdentity>();
     }
 
-    public void SetPlayer(PlaceBlock player)
+    [Server]
+    public void SetPlayer(NetworkIdentity player)
     {
         this.player = player;
     }
 
+    [Server]
     public bool DamageBlock(int dmg)
     {
-        Destroy(parent.GetChild(0).gameObject);
+        NetworkServer.Destroy(parent.GetChild(0).gameObject);
         hitPoint += dmg;
         if (hitPoint >= maxHitPoint) {
             return true;
         } else {
             SpawnBlocks();
+            RpcUpdateBlockState(hitPoint);
             return false;
         }
     }
@@ -55,12 +61,36 @@ public class SnowBlock : MonoBehaviour
     {
         var block = Instantiate(snowBlockStates[hitPoint], parent);
         block.transform.localRotation = Quaternion.identity;
-        if (hitPoint == 0) {
+        if (hitPoint == 0)
+        {
             block.transform.localPosition = Vector3.zero;
-        } else {
+        } else
+        {
             block.transform.localPosition = new Vector3(0, -0.8f, 0.1f);
             block.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
     }
 
+    [ClientRpc]
+    private void RpcUpdateBlockState(int hitPoint)
+    {
+        Destroy(parent.GetChild(0).gameObject);
+        var block = Instantiate(snowBlockStates[hitPoint], parent);
+        block.transform.localRotation = Quaternion.identity;
+        if (hitPoint == 0)
+        {
+            block.transform.localPosition = Vector3.zero;
+        } else
+        {
+            block.transform.localPosition = new Vector3(0, -0.8f, 0.1f);
+            block.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        }
+    }
+
+    [TargetRpc]
+    private void RpcBlockDestroyed(NetworkConnection conn)
+    {
+        Debug.Log("block destroyed");
+        BlockDestroyed?.Invoke(this);
+    }
 }

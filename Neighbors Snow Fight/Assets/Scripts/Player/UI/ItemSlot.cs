@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Mirror;
 
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : NetworkBehaviour
 {
     [SerializeField] private Transform modelParent;
     [SerializeField] private TextMeshProUGUI timeLeft;
@@ -24,9 +25,14 @@ public class ItemSlot : MonoBehaviour
 
     void Update()
     {
-        timeLeft.text = item.GetTimeLeft().ToString("0") + " sec";
-        if (item.GetTimeLeft() <= 0 || item == null) {
-            
-        }
+        if (!isServer) return;
+
+        RpcUpdateTimeLeft(GetComponentInParent<NetworkIdentity>().connectionToServer, item.GetTimeLeft());
+    }
+
+    [TargetRpc]
+    private void RpcUpdateTimeLeft(NetworkConnection conn, float time)
+    {
+        timeLeft.text = time.ToString("0") + " sec";
     }
 }

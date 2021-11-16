@@ -18,12 +18,15 @@ public class PlayerShoot : NetworkBehaviour
     private float minLaunchForce = 25f;
     private float maxLaunchForce = 40f;
     private float maxChargeTime = 1f;
+    [SyncVar]
     private bool fired;
+    [SyncVar]
     private float currentLaunchForce;
     private float chargeSpeed;
 
     private int baseMaxSnowBall = 3;
     private int maxSnowBall;
+    [SyncVar]
     private int nbSnowBallCreated = 0;      // --> munitions
     private GameObject currentSnowBall;
 
@@ -77,29 +80,41 @@ public class PlayerShoot : NetworkBehaviour
         aimSlider.value = minLaunchForce;
         ballsCreated.text = nbSnowBallCreated.ToString();
         if (Input.GetKeyDown(KeyCode.R)) {
-            StartCoroutine(Reload());
+            Debug.Log("Reload");
+            CmdReload();
         }
         UpdateAndHandleShootingState();
+    }
+
+    [Command]
+    private void CmdReload()
+    {
+        StartCoroutine(Reload());
     }
 
     private IEnumerator Reload()
     {
         var gauge = GetComponent<SnowGauge>();
         if (!gauge.CanReload() || nbSnowBallCreated > 0) {
-            MessageAnnoncer.Message = "You can't reload right now, collect snow!";
+            //MessageAnnoncer.Message = "You can't reload right now, collect snow!";
             yield break;
         }
-
-        PlayerReload?.Invoke(this);
 
         if (!hasMold) {
             GetComponent<PlayerMouvement>().SetSpeed(0.2f);
             yield return new WaitForSeconds(1.5f);
-        }  
+        }
 
-        gauge.UseSnow(1);
         nbSnowBallCreated = maxSnowBall;
+        GetComponent<SnowGauge>().UseSnow(1);
+        RpcReload(GetComponent<NetworkIdentity>().connectionToServer);
         GetComponent<PlayerMouvement>().SetSpeed(1f);
+    }
+
+    [TargetRpc]
+    private void RpcReload(NetworkConnection conn)
+    {
+        PlayerReload?.Invoke(this);
     }
 
     private void UpdateAndHandleShootingState()
@@ -109,7 +124,8 @@ public class PlayerShoot : NetworkBehaviour
         var direction = GetComponentInChildren<MouseLook>().GetDirection();
         if (currentLaunchForce >= maxLaunchForce && !fired) {
             currentLaunchForce = maxLaunchForce;
-            CmdLaunchBall(direction);
+            fired = true;
+            CmdLaunchBall(direction, currentLaunchForce);
         } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
             fired = false;
             currentLaunchForce = minLaunchForce;
@@ -118,28 +134,29 @@ public class PlayerShoot : NetworkBehaviour
             aimSlider.gameObject.SetActive(true);
             aimSlider.value = currentLaunchForce;
         } else if (Input.GetKeyUp(KeyCode.Mouse0) && !fired) {
-            CmdLaunchBall(direction);
+            fired = true;
+            CmdLaunchBall(direction, currentLaunchForce);
         }
     }
 
     [Command]
-    private void CmdLaunchBall(Quaternion direction)
-    {
-        RpcLaunchBall(direction);
-    }
-
-    [ClientRpc]
-    private void RpcLaunchBall(Quaternion direction)
+    private void CmdLaunchBall(Quaternion direction, float force)
     {
         fired = true;
         launchPos.rotation = direction;
         GameObject snowBall = Instantiate(currentSnowBall, launchPos.position, direction);
 
+        NetworkServer.Spawn(snowBall);
         snowBall.GetComponent<SnowBall>().SetLauncher(this);
-        snowBall.GetComponent<Rigidbody>().velocity = launchPos.forward * currentLaunchForce;
-
-        currentLaunchForce = minLaunchForce;
+        snowBall.GetComponent<Rigidbody>().velocity = launchPos.forward * force;
         nbSnowBallCreated--;
+        RpcUpdateAfterLaunch(GetComponent<NetworkIdentity>().connectionToServer);
+    }
+
+    [TargetRpc]
+    private void RpcUpdateAfterLaunch(NetworkConnection conn)
+    {
+        currentLaunchForce = minLaunchForce;
         if (aimSlider != null)
             aimSlider.gameObject.SetActive(false);
     }

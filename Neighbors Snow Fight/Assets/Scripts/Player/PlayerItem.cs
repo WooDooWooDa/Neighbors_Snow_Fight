@@ -23,13 +23,13 @@ public class PlayerItem : NetworkBehaviour
     {
         if (items.Count == 2) return;
 
-        PlayerCollectItem?.Invoke(this, item);
         items.Add(item);
     }
 
+    [Server]
     private void Update()
     {
-        if (!isLocalPlayer) return; // server ?
+        if (!isServerOnly) return;
 
         foreach (BaseItem item in items) {
             if (!item.HasBeenActivated())
@@ -42,11 +42,13 @@ public class PlayerItem : NetworkBehaviour
             RemoveItems();
     }
 
+    [Server]
     private void RemoveItems()
     {
-        foreach (var item in removed) {
+        Debug.LogWarning("Removing items");
+        foreach (BaseItem item in removed) {
+            RpcRemoveItem(GetComponent<NetworkIdentity>().connectionToServer, item);
             items.Remove(item);
-            PlayerItemRemove?.Invoke(this, item);
         }
         removed.Clear();
     }
@@ -55,7 +57,9 @@ public class PlayerItem : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<BaseItem>() != null) {
-            RpcCollectItem(this.GetComponent<NetworkIdentity>().connectionToClient, other.GetComponent<BaseItem>());
+            CollectItem(other.GetComponent<BaseItem>());
+            RpcCollectItem(GetComponent<NetworkIdentity>().connectionToServer, other.GetComponent<BaseItem>());
+            other.gameObject.SetActive(false);
             RpcDesactiveItem(other.gameObject);
         }
     }
@@ -67,9 +71,17 @@ public class PlayerItem : NetworkBehaviour
     }
 
     [TargetRpc]
+    private void RpcRemoveItem(NetworkConnection conn, BaseItem item)
+    {
+        Debug.Log("Removing item : " + item);
+        PlayerItemRemove?.Invoke(this, item);
+    }
+
+    [TargetRpc]
     private void RpcCollectItem(NetworkConnection conn, BaseItem item)
     {
-        CollectItem(item);
+        Debug.Log("Collect item : " + item.name);
+        PlayerCollectItem?.Invoke(this, item);
     }
 }
 

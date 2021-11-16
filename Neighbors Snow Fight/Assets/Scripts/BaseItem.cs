@@ -6,6 +6,14 @@ using UnityEngine;
 
 public abstract class BaseItem : NetworkBehaviour
 {
+    private enum Rarity
+    {
+        Common,
+        Uncommon,
+        Rare,
+        Unique
+    }
+
     [SerializeField] private GameObject model;
     [SerializeField] private float baseTime;
     [SerializeField] private Rarity rarity;
@@ -19,6 +27,8 @@ public abstract class BaseItem : NetworkBehaviour
 
     void Start()
     {
+        if (!isServer) return;
+
         timeLeft = baseTime;
         StartCoroutine(DestroyAfter15());
     }
@@ -36,7 +46,7 @@ public abstract class BaseItem : NetworkBehaviour
             if (timeLeft == 0 || effectIsDone) {
                 EndEffect();
                 effectIsDone = true;
-                Destroy(gameObject);
+                NetworkServer.Destroy(gameObject);
             }
         }
     }
@@ -80,19 +90,11 @@ public abstract class BaseItem : NetworkBehaviour
     private IEnumerator DestroyAfter15()
     {
         yield return new WaitForSeconds(15);
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     }
 
     private void OnDisable()
     {
         StopCoroutine(DestroyAfter15());
-    }
-
-    private enum Rarity
-    {
-        Common,
-        Uncommon,
-        Rare,
-        Unique
     }
 }

@@ -1,11 +1,12 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceBlock : MonoBehaviour
+public class PlaceBlock : NetworkBehaviour
 {
     [SerializeField] private LayerMask bound;
-    [SerializeField] private GameObject snowBlock;
+    [SerializeField] private GameObject snowBlockPrefab;
     [SerializeField] private GameObject snowBlockFrame;
 
     public delegate void playerBlockDestroyedDelegate(SnowBlock p);
@@ -16,6 +17,7 @@ public class PlaceBlock : MonoBehaviour
     private int snowCost = 3;
 
     private int maxBlocks = 8;
+    [SyncVar]
     private int placedBlocks = 0;
 
     void Update()
@@ -25,22 +27,27 @@ public class PlaceBlock : MonoBehaviour
         }
         if (spawnedFrame != null) {
             MoveFrame();
-            if (Input.GetKeyDown(KeyCode.Mouse1) && GetComponent<SnowGauge>().Has(snowCost) && placedBlocks < maxBlocks) {
-                Place();
+            if (Input.GetKeyDown(KeyCode.Mouse1)) {
+                Debug.Log("Place Block");
+                CmdPlace(GetComponent<NetworkIdentity>(), spawnedFrame.transform.position, spawnedFrame.transform.rotation);
             }
         }
     }
 
-    private void Place()
+    [Command]
+    private void CmdPlace(NetworkIdentity player, Vector3 framePos, Quaternion frameRot)
     {
+        if (!(GetComponent<SnowGauge>().Has(snowCost) && placedBlocks < maxBlocks)) return;
+
         GetComponent<SnowGauge>().UseSnow(snowCost);
-        Transform frame = spawnedFrame.transform;
-        SnowBlock block = (Instantiate(snowBlock, frame.position + (Vector3.up * 1), frame.rotation)).GetComponent<SnowBlock>();
+        GameObject block = (Instantiate(snowBlockPrefab, framePos + (Vector3.up * 1), frameRot));
+        SnowBlock snowBlock = block.GetComponent<SnowBlock>();
         RandomRotate(block.transform);
-        block.SetPlayer(this);
-        block.BlockDestroyed += BlockDestroyed;
-        ToggleFrame();
+        snowBlock.SetPlayer(player);
+        snowBlock.BlockDestroyed += BlockDestroyed;
         placedBlocks++;
+        NetworkServer.Spawn(block);
+        RpcToggleFrame(GetComponent<NetworkIdentity>().connectionToServer);
     }
 
     private void BlockDestroyed(SnowBlock block)
@@ -77,5 +84,11 @@ public class PlaceBlock : MonoBehaviour
             spawnedFrame = Instantiate(snowBlockFrame, this.transform);
             spawnedFrame.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
+    }
+
+    [TargetRpc]
+    private void RpcToggleFrame(NetworkConnection conn)
+    {
+        ToggleFrame();
     }
 }

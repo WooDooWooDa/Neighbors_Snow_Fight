@@ -20,6 +20,7 @@ public class PlayerMouvement : NetworkBehaviour
 
     private Vector3 velocity;
     private bool isGrounded;
+    [SyncVar]
     private float speed;
     private bool isWalking;
 

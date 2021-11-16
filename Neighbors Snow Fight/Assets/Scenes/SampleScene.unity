@@ -855,6 +855,9 @@ MonoBehaviour:
   - {fileID: 645023122099753340, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
   - {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
   - {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
+  - {fileID: 7255915475132775733, guid: 9ecef849e5cf0db48ac15a57473e34e8, type: 3}
+  - {fileID: 8672977967205675955, guid: c1c1137bcf486be40806031667f3927f, type: 3}
+  - {fileID: 7402375060817853922, guid: f09a92b4dc539d142971f47a3d5c62ae, type: 3}
 --- !u!4 &810970048
 Transform:
   m_ObjectHideFlags: 0
