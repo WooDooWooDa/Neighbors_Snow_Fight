@@ -22,6 +22,7 @@ public abstract class BaseItem : NetworkBehaviour
     protected bool effectIsDone = false;
     protected bool isSuper = false;
 
+    [SyncVar]
     private float timeLeft;
     private bool hasBeenActivated;
 
@@ -46,7 +47,6 @@ public abstract class BaseItem : NetworkBehaviour
             if (timeLeft == 0 || effectIsDone) {
                 EndEffect();
                 effectIsDone = true;
-                NetworkServer.Destroy(gameObject);
             }
         }
     }

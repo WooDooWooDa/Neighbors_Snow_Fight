@@ -8,18 +8,18 @@ public class ExtraBallItem : BaseItem
 
     private int maxBalls = 4;
     private int uses = 0;
-    private int maxUses = 4;
+    private int maxUses = 3;
 
     public override void ApplyEffect()
     {
         var shoot = playerItem.GetComponent<PlayerShoot>();
-        shoot.ChangeMaxBalls(false, maxBalls);
+        shoot.ChangeMaxBalls(maxBalls);
         shoot.PlayerReload += UpdateUses;
     }
 
     public override void EndEffect()
     {
-        playerItem.GetComponent<PlayerShoot>().ChangeMaxBalls(true);
+        playerItem.GetComponent<PlayerShoot>().ChangeMaxBalls();
     }
 
     public override void UpdateItem()
@@ -30,6 +30,7 @@ public class ExtraBallItem : BaseItem
 
     private void UpdateUses(PlayerShoot player)
     {
+        Debug.Log("use extra ball");
         if (player.GetComponent<PlayerItem>() != playerItem) return;
         uses++;
     }

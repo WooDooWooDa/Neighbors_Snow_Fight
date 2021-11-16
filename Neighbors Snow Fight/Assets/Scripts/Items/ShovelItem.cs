@@ -11,7 +11,7 @@ public class ShovelItem : BaseItem
 
     public override void ApplyEffect()
     {
-        playerItem.GetComponent<CollectSnow>().SetDelay(0.5f);
+        playerItem.GetComponent<CollectSnow>().SetDelay(0.2f);
         playerItem.GetComponent<CollectSnow>().PlayerCollectSnow += UpdateSnowLayerPickUp;
     }
 
@@ -29,7 +29,6 @@ public class ShovelItem : BaseItem
 
     private void UpdateSnowLayerPickUp(CollectSnow snow)
     {
-        if (snow.GetComponent<PlayerItem>() != playerItem) return;
         snowLayerPicked++;
     }
 }

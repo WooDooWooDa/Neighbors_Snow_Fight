@@ -16,7 +16,6 @@ public class ShieldItem : BaseItem
         hitPoint = maxHitPoint;
         playerItem.GetComponent<PlayerHealth>().HasShield(true, shield);
         playerItem.GetComponent<PlayerHealth>().PlayerHit += GotHit;
-
     }
 
     public override void EndEffect()
@@ -32,7 +31,6 @@ public class ShieldItem : BaseItem
 
     public void GotHit(PlayerHealth health, int point)
     {
-        if (health.GetComponent<PlayerItem>() != playerItem) return;
         hitPoint -= point;
     }
 }

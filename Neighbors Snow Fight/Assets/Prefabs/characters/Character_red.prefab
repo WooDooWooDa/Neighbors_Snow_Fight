@@ -207,9 +207,9 @@ GameObject:
   - component: {fileID: 481852077}
   - component: {fileID: 1406518774}
   - component: {fileID: 1406518785}
+  - component: {fileID: 5889617001142121175}
   - component: {fileID: 1986119546}
   - component: {fileID: 1986119547}
-  - component: {fileID: 5889617001142121175}
   - component: {fileID: 6564764140542859745}
   - component: {fileID: 6783670089110897925}
   - component: {fileID: 3074366586928665790}
@@ -364,6 +364,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   items: []
+  itemsDisplay: {fileID: 5004830068592783478}
 --- !u!114 &1401976678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +425,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4e45d005cf7fb41a500a94dc124a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5889617001142121175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4436386201885349399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b66d3afca082d4880e0c75d670ae2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 3103807546665192807}
 --- !u!114 &1986119546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,19 +484,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &5889617001142121175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4436386201885349399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b66d3afca082d4880e0c75d670ae2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3103807546665192807}
 --- !u!114 &6564764140542859745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,15 +786,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1528205152798315351 stripped
+--- !u!114 &5668191451504929274 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3351631951538021610, guid: f099ceb6fef56f84b803273d16a7f5dc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8439556473166077511, guid: f099ceb6fef56f84b803273d16a7f5dc, type: 3}
   m_PrefabInstance: {fileID: 4302668265998710717}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7123769823024647218 stripped
@@ -807,15 +808,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5668191451504929274 stripped
+--- !u!114 &5004830068592783478 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8439556473166077511, guid: f099ceb6fef56f84b803273d16a7f5dc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 9134038452039862219, guid: f099ceb6fef56f84b803273d16a7f5dc, type: 3}
   m_PrefabInstance: {fileID: 4302668265998710717}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 874430199fbfee441a00bcad1a2b017c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1528205152798315351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3351631951538021610, guid: f099ceb6fef56f84b803273d16a7f5dc, type: 3}
+  m_PrefabInstance: {fileID: 4302668265998710717}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4436386200719614848

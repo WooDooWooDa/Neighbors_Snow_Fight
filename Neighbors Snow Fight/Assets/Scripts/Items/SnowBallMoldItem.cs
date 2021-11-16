@@ -7,7 +7,7 @@ public class SnowBallMoldItem : BaseItem
     public delegate void playerReloadDelegate(PlayerShoot p);
 
     private int uses = 0;
-    private int maxUse = 4;
+    private int maxUse = 3;
 
     public override void ApplyEffect()
     {
@@ -29,7 +29,6 @@ public class SnowBallMoldItem : BaseItem
 
     private void UpdateUses(PlayerShoot player)
     {
-        if (player.GetComponent<PlayerItem>() != playerItem) return;
         uses++;
     }
 }

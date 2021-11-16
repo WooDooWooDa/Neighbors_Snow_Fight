@@ -25,6 +25,7 @@ public class PlayerShoot : NetworkBehaviour
     private float chargeSpeed;
 
     private int baseMaxSnowBall = 3;
+    [SyncVar]
     private int maxSnowBall;
     [SyncVar]
     private int nbSnowBallCreated = 0;      // --> munitions
@@ -35,12 +36,13 @@ public class PlayerShoot : NetworkBehaviour
     public delegate void playerReloadDelegate(PlayerShoot p);
     public event playerReloadDelegate PlayerReload;
 
-    public void ChangeMaxBalls(bool useBase, int amount = 0)
+    public void ChangeMaxBalls(int amount = 0)
     {
-        if (useBase)
+        if (amount == 0)
             maxSnowBall = baseMaxSnowBall;
         else
             maxSnowBall = amount;
+        GetComponent<SnowGauge>().ChangeBallsPerLayer(amount);
     }
 
     public void UseMold(bool use)
@@ -50,6 +52,8 @@ public class PlayerShoot : NetworkBehaviour
 
     public void ReplaceBall(GameObject newBall)
     {
+        if (newBall != null)
+            nbSnowBallCreated = maxSnowBall;
         currentSnowBall = newBall != null ? newBall : baseSnowBall;
     }
 
@@ -92,6 +96,7 @@ public class PlayerShoot : NetworkBehaviour
         StartCoroutine(Reload());
     }
 
+    [Server]
     private IEnumerator Reload()
     {
         var gauge = GetComponent<SnowGauge>();
@@ -106,15 +111,9 @@ public class PlayerShoot : NetworkBehaviour
         }
 
         nbSnowBallCreated = maxSnowBall;
-        GetComponent<SnowGauge>().UseSnow(1);
-        RpcReload(GetComponent<NetworkIdentity>().connectionToServer);
-        GetComponent<PlayerMouvement>().SetSpeed(1f);
-    }
-
-    [TargetRpc]
-    private void RpcReload(NetworkConnection conn)
-    {
+        gauge.UseSnow(1);
         PlayerReload?.Invoke(this);
+        GetComponent<PlayerMouvement>().SetSpeed(1f);
     }
 
     private void UpdateAndHandleShootingState()

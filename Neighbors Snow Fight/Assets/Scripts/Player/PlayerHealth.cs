@@ -1,9 +1,10 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : NetworkBehaviour
 {
     [SerializeField] private Transform shieldParent;
 
@@ -16,10 +17,13 @@ public class PlayerHealth : MonoBehaviour
     public void HasShield(bool value, GameObject shield = null)
     {
         hasShield = value;
-        if (value)
+        if (value) {
             currentShield = Instantiate(shield, shieldParent.position, Quaternion.identity, shieldParent);
-        else
-            Destroy(currentShield);
+            NetworkServer.Spawn(currentShield);
+            //RpcShield(shield);
+            return;
+        }
+        NetworkServer.Destroy(currentShield);
     }
 
     public void Hit(int hitPoint)

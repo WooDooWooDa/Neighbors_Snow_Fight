@@ -23,15 +23,7 @@ public class ItemSlot : NetworkBehaviour
         model.transform.localScale = new Vector3(25, 25, 1);
     }
 
-    void Update()
-    {
-        if (!isServer) return;
-
-        RpcUpdateTimeLeft(GetComponentInParent<NetworkIdentity>().connectionToServer, item.GetTimeLeft());
-    }
-
-    [TargetRpc]
-    private void RpcUpdateTimeLeft(NetworkConnection conn, float time)
+    public void UpdateTime(float time)
     {
         timeLeft.text = time.ToString("0") + " sec";
     }

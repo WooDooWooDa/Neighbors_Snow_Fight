@@ -14,11 +14,18 @@ public class SnowGauge : NetworkBehaviour
 
     [SyncVar]
     private int snowGaugeValue = 0;
-
+    [SyncVar]
+    private int ballsPerLayer;
     private int maxSnowGauge = 3;
+
+    public void ChangeBallsPerLayer(int newValue = 0)
+    {
+        ballsPerLayer = newValue == 0 ? 3 : newValue;
+    }
 
     private void Start()
     {
+        ballsPerLayer = maxSnowGauge;
         gaugeSlider.maxValue = maxSnowGauge;
         gaugeSlider.value = snowGaugeValue;
         AddSnow(1);
@@ -27,14 +34,16 @@ public class SnowGauge : NetworkBehaviour
     private void Update()
     {
         gaugeSlider.value = snowGaugeValue;
-        ballAvailable.text = (snowGaugeValue * 3).ToString();
+        ballAvailable.text = (snowGaugeValue * ballsPerLayer).ToString();
     }
 
+    [Server]
     public void Empty()
     {
         snowGaugeValue = 0;
     }
 
+    [Server]
     public void Fill()
     {
         snowGaugeValue = maxSnowGauge;

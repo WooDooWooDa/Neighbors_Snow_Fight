@@ -27,7 +27,8 @@ public class SnowBlock : NetworkBehaviour
         if (!isServerOnly) return;
 
         if (hitPoint >= maxHitPoint) {
-            RpcBlockDestroyed(player.GetComponent<NetworkIdentity>().connectionToServer); // RPC cant be called because conn is null ???
+            Debug.Log(player);
+            RpcBlockDestroyed(player.connectionToClient); // RPC cant be called because conn is null ???
             NetworkServer.Destroy(parent.gameObject);
         }
     }
@@ -40,6 +41,7 @@ public class SnowBlock : NetworkBehaviour
     [Server]
     public void SetPlayer(NetworkIdentity player)
     {
+        Debug.Log(player);
         this.player = player;
     }
 

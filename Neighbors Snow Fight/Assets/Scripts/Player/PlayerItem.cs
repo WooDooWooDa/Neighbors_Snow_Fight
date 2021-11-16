@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerItem : NetworkBehaviour
 {
     [SerializeField] private List<BaseItem> items = new List<BaseItem>();
+    [SerializeField] private ItemsDisplay itemsDisplay;
 
     public delegate void playerCollectItemDelegate(PlayerItem p, BaseItem item);
     public delegate void playerItemRemoveDelegate(PlayerItem p, BaseItem item);
@@ -26,7 +27,6 @@ public class PlayerItem : NetworkBehaviour
         items.Add(item);
     }
 
-    [Server]
     private void Update()
     {
         if (!isServerOnly) return;
@@ -35,8 +35,11 @@ public class PlayerItem : NetworkBehaviour
             if (!item.HasBeenActivated())
                 item.Activate(this);
             item.Update();
-            if (item.GetTimeLeft() <= 0f || item.EffectIsDone() || item == null)
+            RpcUpdateUI(GetComponent<NetworkIdentity>().connectionToServer, item);
+            if (item.GetTimeLeft() <= 0f || item.EffectIsDone()) {
+                RpcRemoveItem(GetComponent<NetworkIdentity>().connectionToServer, item);
                 removed.Add(item);
+            }
         }
         if (removed.Count > 0)
             RemoveItems();
@@ -47,8 +50,8 @@ public class PlayerItem : NetworkBehaviour
     {
         Debug.LogWarning("Removing items");
         foreach (BaseItem item in removed) {
-            RpcRemoveItem(GetComponent<NetworkIdentity>().connectionToServer, item);
             items.Remove(item);
+            NetworkServer.Destroy(item.gameObject);
         }
         removed.Clear();
     }
@@ -71,9 +74,15 @@ public class PlayerItem : NetworkBehaviour
     }
 
     [TargetRpc]
+    private void RpcUpdateUI(NetworkConnection conn, BaseItem item)
+    {
+        itemsDisplay.UpdateSlot(item);
+    }
+
+    [TargetRpc]
     private void RpcRemoveItem(NetworkConnection conn, BaseItem item)
     {
-        Debug.Log("Removing item : " + item);
+        Debug.Log("Removing item : " + item.name);
         PlayerItemRemove?.Invoke(this, item);
     }
 
