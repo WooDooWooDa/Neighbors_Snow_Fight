@@ -14,7 +14,9 @@ public class PlayerShoot : NetworkBehaviour
     [Header("UI")]
     [SerializeField] private Slider aimSlider;
     [SerializeField] private TextMeshProUGUI ballsCreated;
+    [SerializeField] private GameObject hand;
 
+    private Animator handAnimator;
     private float minLaunchForce = 25f;
     private float maxLaunchForce = 40f;
     private float maxChargeTime = 1f;
@@ -52,9 +54,15 @@ public class PlayerShoot : NetworkBehaviour
 
     public void ReplaceBall(GameObject newBall)
     {
-        if (newBall != null)
+        PlayerHand playerHand = hand.GetComponent<PlayerHand>();
+        if (newBall != null) {
             nbSnowBallCreated = maxSnowBall;
-        currentSnowBall = newBall != null ? newBall : baseSnowBall;
+            currentSnowBall = newBall;
+            playerHand.ChangeBallSize(1.2f);
+        } else {
+            currentSnowBall = baseSnowBall;
+            playerHand.ChangeBallSize(1f);
+        }
     }
 
     public bool HasBall()
@@ -69,6 +77,7 @@ public class PlayerShoot : NetworkBehaviour
 
     void Start()
     {
+        handAnimator = hand.GetComponent<Animator>();
         currentSnowBall = baseSnowBall;
         chargeSpeed = (maxLaunchForce - minLaunchForce) / maxChargeTime;
         aimSlider.minValue = minLaunchForce;
@@ -83,6 +92,7 @@ public class PlayerShoot : NetworkBehaviour
 
         aimSlider.value = minLaunchForce;
         ballsCreated.text = nbSnowBallCreated.ToString();
+        hand.GetComponent<PlayerHand>().ShowHand(HasBall());
         if (Input.GetKeyDown(KeyCode.R)) {
             Debug.Log("Reload");
             CmdReload();
@@ -124,6 +134,7 @@ public class PlayerShoot : NetworkBehaviour
         if (currentLaunchForce >= maxLaunchForce && !fired) {
             currentLaunchForce = maxLaunchForce;
             fired = true;
+            handAnimator.SetTrigger("Shoot");
             CmdLaunchBall(direction, currentLaunchForce);
         } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
             fired = false;
@@ -134,6 +145,7 @@ public class PlayerShoot : NetworkBehaviour
             aimSlider.value = currentLaunchForce;
         } else if (Input.GetKeyUp(KeyCode.Mouse0) && !fired) {
             fired = true;
+            handAnimator.SetTrigger("Shoot");
             CmdLaunchBall(direction, currentLaunchForce);
         }
     }

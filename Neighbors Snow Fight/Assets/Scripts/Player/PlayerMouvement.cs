@@ -7,9 +7,11 @@ using UnityEngine;
 public class PlayerMouvement : NetworkBehaviour
 {
     [SerializeField] private Transform head;
+    [SerializeField] private GameObject hand;
 
     public CharacterController controller;
     Animator animator;
+    Animator handAnimator;
     public float baseSpeed = 12f;
     public float gravity = -9.81f * 2;
     public float jumpHeight = 2f;
@@ -32,6 +34,7 @@ public class PlayerMouvement : NetworkBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        handAnimator = hand.GetComponent<Animator>();
     }
 
     void Start()
@@ -77,12 +80,15 @@ public class PlayerMouvement : NetworkBehaviour
     private void UpdateAnimator()
     {
         if (isGrounded && !isWalking) {
+            handAnimator.SetBool("Walk", false);
             animator.SetBool("Walk", false); //return to idle
             animator.SetBool("Sprint", false);
         } else if (isWalking && speed == baseSpeed) {
+            handAnimator.SetBool("Walk", true);
             animator.SetBool("Sprint", false);
             animator.SetBool("Walk", true);
         } else if (isWalking && speed != baseSpeed) {
+            handAnimator.SetBool("Walk", true);
             animator.SetBool("Walk", false);
             animator.SetBool("Sprint", true);
         }
@@ -91,6 +97,7 @@ public class PlayerMouvement : NetworkBehaviour
     private void Jump()
     {
         animator.SetTrigger("Jump");
+        handAnimator.SetTrigger("Jump");
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
