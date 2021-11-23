@@ -37,6 +37,7 @@ public class SnowBall : NetworkBehaviour
             HitGround(collision);
         } else if (HitThisLayer(playerLayer, collision)) {
             HitPlayer(collision);
+            launcher.GetComponent<Score>().AddPoints(hitPoint);
         } else if (HitThisLayer(snowBlockLayer, collision)) {
             HitBlock(collision);
         } else if (HitThisLayer(snowLayerLayer, collision)) {

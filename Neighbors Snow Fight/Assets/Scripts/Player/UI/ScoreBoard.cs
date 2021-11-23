@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ScoreBoard : MonoBehaviour
 {
-    private static readonly int YOU_INDEX = 0;
-    private static readonly int ENEMY_INDEX = 1;
-
     [SerializeField] private TextMeshProUGUI youScore;
     [SerializeField] private TextMeshProUGUI enemyScore;
 
@@ -22,17 +19,11 @@ public class ScoreBoard : MonoBehaviour
         playersScore = GameObject.FindObjectsOfType<Score>();
     }
 
-
-    void Update()
+    public void UpdateScore(float you, float ennemy)
     {
-        foreach (var score in playersScore) {
-            if (score == GetComponentInParent<Score>()) {
-                youScore.text = ScoreToString(score.GetScore());
-            } else {
-                enemyScore.text = ScoreToString(score.GetScore());
-            }
-        }
-        scoreBall.UpdateSpeed(playersScore[YOU_INDEX].GetScore(), playersScore[ENEMY_INDEX].GetScore());
+        youScore.text = ScoreToString(you);
+        enemyScore.text = ScoreToString(ennemy);
+        scoreBall.UpdateSpeed(you, ennemy);
     }
 
     private string ScoreToString(float score)

@@ -19,8 +19,9 @@ public class PlayerHealth : NetworkBehaviour
         hasShield = value;
         if (value) {
             currentShield = Instantiate(shield, shieldParent.position, Quaternion.identity, shieldParent);
+            currentShield.GetComponent<Shield>().parentIdentity = this.GetComponent<NetworkIdentity>();
             NetworkServer.Spawn(currentShield);
-            //RpcShield(shield);
+            RpcShield(this.GetComponent<NetworkIdentity>(), currentShield);
             return;
         }
         NetworkServer.Destroy(currentShield);
@@ -32,6 +33,15 @@ public class PlayerHealth : NetworkBehaviour
 
         if (!hasShield) {
             Debug.Log("Knock");
+        }
+    }
+
+    [ClientRpc]
+    private void RpcShield(NetworkIdentity identity, GameObject shield)
+    {
+        if (GetComponent<NetworkIdentity>() == identity) {
+            Destroy(shield);
+            Debug.Log("Destroying shield on right player client");
         }
     }
 

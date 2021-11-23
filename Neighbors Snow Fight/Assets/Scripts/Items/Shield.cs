@@ -10,7 +10,6 @@ public class Shield : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        GameObject parentObject = null; //change
-        transform.SetParent(parentObject.transform);
+        transform.SetParent(parentIdentity.transform);
     }
 }

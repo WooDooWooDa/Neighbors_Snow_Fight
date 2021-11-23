@@ -9,7 +9,7 @@ public class ShieldItem : BaseItem
     public delegate void playerHitDelegate(PlayerHealth p, int point);
 
     private int maxHitPoint = 4;
-    private int hitPoint;
+    private int hitPoint = 0;
 
     public override void ApplyEffect()
     {
@@ -25,12 +25,12 @@ public class ShieldItem : BaseItem
 
     public override void UpdateItem()
     {
-        if (hitPoint <= 0)
+        if (hitPoint >= maxHitPoint)
             effectIsDone = true;
     }
 
     public void GotHit(PlayerHealth health, int point)
     {
-        hitPoint -= point;
+        hitPoint += point;
     }
 }

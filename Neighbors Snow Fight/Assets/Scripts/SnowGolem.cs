@@ -1,10 +1,11 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnowGolem : MonoBehaviour
+public class SnowGolem : NetworkBehaviour
 {
-    [SerializeField] private Rigidbody snowBallPrefab;
+    [SerializeField] private GameObject snowBallPrefab;
     [SerializeField] private Transform launchPos;
     [SerializeField] private Transform head;
 
@@ -12,7 +13,7 @@ public class SnowGolem : MonoBehaviour
     private Transform currentTarget;
     private PlayerItem player;
 
-    private float launchForce = 40f;
+    private float launchForce = 45f;
 
     public void SetPlayer(PlayerItem player)
     {
@@ -24,23 +25,30 @@ public class SnowGolem : MonoBehaviour
         var direction = head.rotation;
         var snowBall = Instantiate(snowBallPrefab, launchPos.position, direction);
         launchPos.rotation = direction;
-        snowBall.velocity = launchPos.forward * launchForce;
+        snowBall.GetComponent<SnowBall>().SetLauncher(player.GetComponent<PlayerShoot>());
+        snowBall.GetComponent<Rigidbody>().velocity = launchPos.forward * launchForce;
+        NetworkServer.Spawn(snowBall);
     }
 
     private void Start()
     {
-        GetTargets();
+        if (isServer)
+            GetTargets();
     }
 
     void Update()
     {
+        if (!isServer) return;
+
         currentTarget = GetClosestTarget();
         Vector3 direction = currentTarget.position - transform.position;
         direction = Vector3.RotateTowards(transform.forward, direction, 1f, 0f);
-        Debug.DrawRay(transform.position, direction, Color.red);
+        direction.y = 0;
+        //Debug.DrawRay(transform.position, direction, Color.red);
         transform.rotation = Quaternion.LookRotation(direction);
     }
 
+    [Server]
     private Transform GetClosestTarget()
     {
         Transform closest = null;
@@ -56,6 +64,7 @@ public class SnowGolem : MonoBehaviour
         return closest;
     }
 
+    [Server]
     private void GetTargets()
     {
         targets = GameObject.FindGameObjectsWithTag("Player");

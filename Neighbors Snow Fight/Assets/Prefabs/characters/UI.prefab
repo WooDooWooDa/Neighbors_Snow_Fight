@@ -719,6 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8623352244670469666}
+  - component: {fileID: 3748014758510227549}
   m_Layer: 0
   m_Name: Time
   m_TagString: Untagged
@@ -747,6 +748,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &3748014758510227549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2786736684527794046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6d150f8de2be054eb17b42de6b83b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeLeft: {fileID: 4111819924978589815}
 --- !u!1 &2942021570697297326
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class ScoreBall : MonoBehaviour
     [SerializeField] private Transform ball;
 
     private float speed;
+    private int maxPos = 80;
 
     void Start()
     {
@@ -16,7 +17,7 @@ public class ScoreBall : MonoBehaviour
 
     void Update()
     {
-        var rotation = new Vector3(0, 0, speed / 10);
+        var rotation = new Vector3(0, 0, speed / 2);
         ball.Rotate(rotation);
     }
 
@@ -27,15 +28,15 @@ public class ScoreBall : MonoBehaviour
             tempSpeed = 0;
         } else if (youScore > enemyScore) {
             if (enemyScore != 0) {
-                tempSpeed *= 1 * (youScore / enemyScore);
+                tempSpeed *= 1f * (youScore / enemyScore);
             } else {
-                tempSpeed *= 1 * youScore;
+                tempSpeed *= 1f * youScore;
             }
         } else {
             if (youScore != 0) {
-                tempSpeed *= 1 * (enemyScore / youScore);
+                tempSpeed *= -1f * (enemyScore / youScore);
             } else {
-                tempSpeed *= 1 * enemyScore;
+                tempSpeed *= -1f * enemyScore;
             }
         }
         speed = tempSpeed;

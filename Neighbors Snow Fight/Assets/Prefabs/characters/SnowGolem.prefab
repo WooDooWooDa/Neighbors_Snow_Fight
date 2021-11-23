@@ -314,7 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45adefbacdc74964192a14c91d8bc60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snowBallPrefab: {fileID: 208843253753481880, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
+  syncMode: 0
+  syncInterval: 0.1
+  snowBallPrefab: {fileID: 208843253753481860, guid: 4a9d7616d1b0f764cbf19861a021356e, type: 3}
   launchPos: {fileID: 1966929457}
   head: {fileID: 1281196632999510350}
 --- !u!114 &2193584557188401433
@@ -500,6 +502,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 4ad4df8cb8e0d9241acfd997e4d16a30, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 618e69c882b2482499918928d47dca06, type: 2}
     - target: {fileID: 919132149155446097, guid: 4ad4df8cb8e0d9241acfd997e4d16a30, type: 3}
       propertyPath: m_Name
       value: snow_golem_body
@@ -574,6 +580,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 53d8bd8fc673a1343b825b61f8272e1c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 618e69c882b2482499918928d47dca06, type: 2}
     - target: {fileID: 919132149155446097, guid: 53d8bd8fc673a1343b825b61f8272e1c, type: 3}
       propertyPath: m_Name
       value: snow_golem_head
@@ -648,6 +658,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 4b0b5dca1145d034f913f7b445fcccb2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 618e69c882b2482499918928d47dca06, type: 2}
     - target: {fileID: 919132149155446097, guid: 4b0b5dca1145d034f913f7b445fcccb2, type: 3}
       propertyPath: m_Name
       value: snow_golem_arm
@@ -722,6 +736,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 4b0b5dca1145d034f913f7b445fcccb2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 618e69c882b2482499918928d47dca06, type: 2}
     - target: {fileID: 919132149155446097, guid: 4b0b5dca1145d034f913f7b445fcccb2, type: 3}
       propertyPath: m_Name
       value: snow_golem_arm
