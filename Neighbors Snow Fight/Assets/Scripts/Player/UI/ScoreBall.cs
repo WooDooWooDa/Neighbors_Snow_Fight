@@ -8,7 +8,6 @@ public class ScoreBall : MonoBehaviour
     [SerializeField] private Transform ball;
 
     private float speed;
-    private int maxPos = 80;
 
     void Start()
     {

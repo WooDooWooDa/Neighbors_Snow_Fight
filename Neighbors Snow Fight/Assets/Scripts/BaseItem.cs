@@ -23,8 +23,8 @@ public abstract class BaseItem : NetworkBehaviour
     protected bool isSuper = false;
 
     [SyncVar]
-    private float timeLeft;
-    private bool hasBeenActivated;
+    protected float timeLeft;
+    protected bool hasBeenActivated;
 
     void Start()
     {

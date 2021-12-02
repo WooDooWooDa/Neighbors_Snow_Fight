@@ -35,7 +35,7 @@ public class MessageAnnoncer : MonoBehaviour
             annoncer.fontSize = FontSize;
             SetColor();
             annoncer.text = Message;
-            if (Duration > elapsed) {
+            if (Duration < elapsed) {
                 Reset();
             }
             elapsed += Time.deltaTime;
@@ -56,7 +56,7 @@ public class MessageAnnoncer : MonoBehaviour
         annoncer.text = "";
         elapsed = 0;
         Duration = defaultDuration;
-        annoncer.fontSize = defaultFontSize;
+        FontSize = defaultFontSize;
         MessageType = Type.Message;
         Message = null;
     }

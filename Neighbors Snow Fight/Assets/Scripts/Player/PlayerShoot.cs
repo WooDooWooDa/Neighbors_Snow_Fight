@@ -34,6 +34,8 @@ public class PlayerShoot : NetworkBehaviour
     private GameObject currentSnowBall;
 
     private bool hasMold = false;
+    [SyncVar]
+    public bool canShoot = false;
 
     public delegate void playerReloadDelegate(PlayerShoot p);
     public event playerReloadDelegate PlayerReload;
@@ -93,6 +95,9 @@ public class PlayerShoot : NetworkBehaviour
         aimSlider.value = minLaunchForce;
         ballsCreated.text = nbSnowBallCreated.ToString();
         hand.GetComponent<PlayerHand>().ShowHand(HasBall());
+
+        if (!canShoot) return;
+
         if (Input.GetKeyDown(KeyCode.R)) {
             Debug.Log("Reload");
             CmdReload();

@@ -12,6 +12,24 @@ public class SnowLayer : NetworkBehaviour
     [SyncVar]
     private int currentLayers;
 
+    [SyncVar]
+    public NetworkIdentity parentIdentity;
+    [SyncVar]
+    private Vector3 pos;
+
+    [Server]
+    public void SetParentPos(NetworkIdentity identity, Vector3 pos)
+    {
+        parentIdentity = identity;
+        this.pos = pos;
+    }
+
+    public override void OnStartClient()
+    {
+        transform.SetParent(parentIdentity.transform);
+        transform.localPosition = pos;
+    }
+
     void Start()
     {
         currentLayers = Random.Range(1, maxLayers + 1);
@@ -22,13 +40,16 @@ public class SnowLayer : NetworkBehaviour
 
     private void Update()
     {
+        if (isServer) return;
+
         filling.transform.localScale = new Vector3(1, currentLayers, 1);
         filling.transform.localPosition = new Vector3(0, ((currentLayers - 1) * 0.03f), 0.05f);
     }
 
+    [Server]
     public void AddSnow(int amount)
     {
-        currentLayers += currentLayers;
+        currentLayers += amount;
         if (currentLayers > maxLayers)
             currentLayers = maxLayers;
     }

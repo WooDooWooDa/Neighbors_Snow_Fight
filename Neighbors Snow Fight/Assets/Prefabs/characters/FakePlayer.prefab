@@ -17,13 +17,14 @@ GameObject:
   - component: {fileID: 3121143587871768083}
   - component: {fileID: 3121143587871768080}
   - component: {fileID: 1234700924}
+  - component: {fileID: 2730895889703044466}
   m_Layer: 3
   m_Name: FakePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3121143587871768556
 Transform:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ MonoBehaviour:
   aimSlider: {fileID: 0}
   ballsCreated: {fileID: 0}
   hand: {fileID: 3121143588118137340}
+  canShoot: 0
 --- !u!114 &3121143587871768080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +179,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4e45d005cf7fb41a500a94dc124a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2730895889703044466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3121143587871768552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339dbeafe9671b24aa50cd641f60ba41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  head: {fileID: 0}
+  hand: {fileID: 0}
+  controller: {fileID: 0}
+  baseSpeed: 12
+  gravity: -19.62
+  jumpHeight: 2
+  groundCheck: {fileID: 0}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  canMove: 0
 --- !u!1 &3121143588118137340
 GameObject:
   m_ObjectHideFlags: 0

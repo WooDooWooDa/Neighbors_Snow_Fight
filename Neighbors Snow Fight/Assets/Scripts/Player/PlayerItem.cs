@@ -56,9 +56,10 @@ public class PlayerItem : NetworkBehaviour
         removed.Clear();
     }
 
-    [Server]
     private void OnTriggerEnter(Collider other)
     {
+        if (!isServerOnly) return;
+
         if (other.GetComponent<BaseItem>() != null) {
             CollectItem(other.GetComponent<BaseItem>());
             RpcCollectItem(GetComponent<NetworkIdentity>().connectionToServer, other.GetComponent<BaseItem>());

@@ -8,6 +8,9 @@ public class CollectSnow : NetworkBehaviour
     [SerializeField] private float pickUpRange = 10f;
     [SerializeField] private float basePickUpDelay = 0.5f;
 
+    [SyncVar]
+    public bool canCollect = false;
+
     private float elapsed;
     private float pickUpDelay;
 
@@ -31,7 +34,8 @@ public class CollectSnow : NetworkBehaviour
             elapsed += Time.deltaTime;
 
         if (!isLocalPlayer) return;
-        
+        if (!canCollect) return;
+
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             Debug.Log("Pick up snow");
             var look = GetComponentInChildren<MouseLook>();

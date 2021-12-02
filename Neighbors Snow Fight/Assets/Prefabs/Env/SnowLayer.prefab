@@ -93,8 +93,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9068a21670b931d44b06349d8551217f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   layerPrefab: {fileID: 919132149155446097, guid: 26fc90df545793449b284c2e3cd6c7a2, type: 3}
   filling: {fileID: 8931438943683678693}
+  parentIdentity: {fileID: 0}
 --- !u!65 &8346000117616226060
 BoxCollider:
   m_ObjectHideFlags: 0

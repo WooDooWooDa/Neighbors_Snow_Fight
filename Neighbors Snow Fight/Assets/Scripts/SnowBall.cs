@@ -72,7 +72,7 @@ public class SnowBall : NetworkBehaviour
 
     private void HitLayer(Collision collision)
     {
-        if (UnityEngine.Random.Range(0, 100) < 20)
+        if (UnityEngine.Random.Range(0, 100) < (20 * hitPoint))
             collision.gameObject.GetComponent<SnowLayer>().AddSnow(1);
         NetworkServer.Destroy(gameObject);
     }

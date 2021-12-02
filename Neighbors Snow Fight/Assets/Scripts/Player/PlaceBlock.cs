@@ -60,7 +60,6 @@ public class PlaceBlock : NetworkBehaviour
         var direction = GetComponentInChildren<MouseLook>().GetDirection();
         var position = GetComponentInChildren<MouseLook>().GetPosition();
         if(Physics.Raycast(position, direction * Vector3.forward, out RaycastHit hit, dist)) {
-            Debug.LogWarning(hit.collider.gameObject.layer);
             if (!((bound.value & (1 << hit.collider.gameObject.layer)) > 0)) {
                 spawnedFrame.SetActive(true);
                 spawnedFrame.transform.position = hit.point;

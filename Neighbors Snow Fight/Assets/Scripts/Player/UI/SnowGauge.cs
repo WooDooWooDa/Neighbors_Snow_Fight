@@ -28,7 +28,6 @@ public class SnowGauge : NetworkBehaviour
         ballsPerLayer = maxSnowGauge;
         gaugeSlider.maxValue = maxSnowGauge;
         gaugeSlider.value = snowGaugeValue;
-        AddSnow(1); //TODO remove this !!!
     }
 
     private void Update()

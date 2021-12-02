@@ -26,6 +26,9 @@ public class PlayerMouvement : NetworkBehaviour
     private float speed;
     private bool isWalking;
 
+    [SyncVar]
+    public bool canMove;
+
     public void SetSpeed(float pourcentage)
     {
         speed = baseSpeed * pourcentage;
@@ -40,12 +43,14 @@ public class PlayerMouvement : NetworkBehaviour
     void Start()
     {
         speed = baseSpeed;
+        canMove = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isLocalPlayer) return;
+
+        if (!canMove) return;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         UpdateAnimator();
