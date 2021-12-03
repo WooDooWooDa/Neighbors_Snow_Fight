@@ -26,11 +26,13 @@ public class GameManager : NetworkBehaviour
 
 
     [Header("Game")]
-    [SerializeField] private float maxGameTime = 120.0f; //2 minutes
-    [SerializeField] private float snowStormTime = 60.0f; //2 minutes
+    [SerializeField] private float prepPhaseTme = 30.0f;
+    [SerializeField] private float GameTime = 120.0f; //2 minutes
+    [SerializeField] private float snowStormTime = 60.0f; 
     private SnowStorm snowStorm;
     private float currentGameTime;
     private bool roundIsPlaying = false;
+    private bool prepPhaseIsRunning = false;
 
     public override void OnStartClient()
     {
@@ -52,7 +54,6 @@ public class GameManager : NetworkBehaviour
         if (!isServerOnly) return;
 
         GetPlayers();
-        currentGameTime = maxGameTime;
     }
 
     [Server]
@@ -68,12 +69,13 @@ public class GameManager : NetworkBehaviour
         while (players.Length < minPlayers) {  //waiting for players
             GetPlayers();
             RpcMessage("Waiting for players...", 1000);
-            RpcPlayWaitingMusic();
+            RpcWaiting();
             yield return null;
         }
         RpcMessage("", 1);
 
         yield return StartCoroutine(RoundStart());
+        yield return StartCoroutine(PrepPhase());
         yield return StartCoroutine(RoundPlaying());
         yield return StartCoroutine(RoundEnd());
     }
@@ -90,10 +92,24 @@ public class GameManager : NetworkBehaviour
     }
 
     [Server]
+    private IEnumerator PrepPhase()
+    {
+        currentGameTime = prepPhaseTme;
+        TogglePlayerActions(true, false, true);
+        prepPhaseIsRunning = true;
+        yield return new WaitForSeconds(1);
+        RpcMessage("Collect snow on the ground to build defenses", 5);
+        while (currentGameTime > 0f) {
+            yield return null;
+        }
+    }
+
+    [Server]
     private IEnumerator RoundPlaying()
     {
-        RpcPlayCombatMusic();
-        TogglePlayerActions(true);
+        currentGameTime = GameTime;
+        RpcCombatTime();
+        TogglePlayerActions(true, true, true);
         roundIsPlaying = true;
         GetComponent<ItemSpawner>().Activate(true);
         while (currentGameTime > 0f) {
@@ -104,8 +120,9 @@ public class GameManager : NetworkBehaviour
     [Server]
     private IEnumerator RoundEnd()
     {
-        TogglePlayerActions(false);
-        GetComponent<ItemSpawner>().Activate(false); 
+        TogglePlayerActions(false, false, false);
+        GetComponent<ItemSpawner>().Activate(false);
+        prepPhaseIsRunning = false;
         roundIsPlaying = false;
         RpcGameOver();
         var winner = CalculateWinner();
@@ -119,15 +136,12 @@ public class GameManager : NetworkBehaviour
     {
         if (!isServerOnly) return;
 
-        if (!roundIsPlaying) return;
-
-        if (players.Length != maxPlayers)
-            GetPlayers();
-
+        if (!roundIsPlaying && !prepPhaseIsRunning) return;
+        
         UpdateTime();
         UpdateScore();
 
-        if (currentGameTime <= snowStormTime && !snowStorm.IsActive())
+        if (currentGameTime <= snowStormTime && !snowStorm.IsActive() && roundIsPlaying)
             snowStorm.StartSnowStorm();
     }
 
@@ -145,12 +159,12 @@ public class GameManager : NetworkBehaviour
     }
 
     [Server]
-    private void TogglePlayerActions(bool toggle)
+    private void TogglePlayerActions(bool mouv, bool shoot, bool collect)
     {
         foreach (var player in players) {
-            player.GetComponent<PlayerMouvement>().canMove = toggle;
-            player.GetComponent<PlayerShoot>().canShoot = toggle;
-            player.GetComponent<CollectSnow>().canCollect = toggle;
+            player.GetComponent<PlayerMouvement>().canMove = mouv;
+            player.GetComponent<PlayerShoot>().canShoot = shoot;
+            player.GetComponent<CollectSnow>().canCollect = collect;
         }
     }
 
@@ -197,18 +211,19 @@ public class GameManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void RpcPlayCombatMusic()
-    {
-        musicSource.clip = roundMusic;
-        musicSource.Play();
-    }
-
-    [ClientRpc]
-    private void RpcPlayWaitingMusic()
+    private void RpcWaiting()
     {
         if (musicSource.isPlaying && musicSource.clip == waitingMusic) return;
         musicSource.clip = waitingMusic;
         musicSource.Play();
+    }
+
+    [ClientRpc]
+    private void RpcCombatTime()
+    {
+        musicSource.clip = roundMusic;
+        musicSource.Play();
+        MessageAnnoncer.Message = "The game is on, time to attack!";
     }
 
     [ClientRpc]

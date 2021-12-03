@@ -28,7 +28,7 @@ public class SnowBlock : NetworkBehaviour
 
         if (hitPoint >= maxHitPoint) {
             Debug.Log(player);
-            RpcBlockDestroyed(player.connectionToClient); // RPC cant be called because conn is null ???
+            BlockDestroyed?.Invoke(this);
             NetworkServer.Destroy(parent.gameObject);
         }
     }
@@ -87,12 +87,5 @@ public class SnowBlock : NetworkBehaviour
             block.transform.localPosition = new Vector3(0, -0.8f, 0.1f);
             block.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
-    }
-
-    [TargetRpc]
-    private void RpcBlockDestroyed(NetworkConnection conn)
-    {
-        Debug.Log("block destroyed");
-        BlockDestroyed?.Invoke(this);
     }
 }

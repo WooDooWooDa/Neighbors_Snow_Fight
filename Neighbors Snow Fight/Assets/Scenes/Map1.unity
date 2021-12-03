@@ -3569,12 +3569,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
+      propertyPath: minPlayers
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: maxGameTime
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
+      propertyPath: prepPhaseTme
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: snowStormTime
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}

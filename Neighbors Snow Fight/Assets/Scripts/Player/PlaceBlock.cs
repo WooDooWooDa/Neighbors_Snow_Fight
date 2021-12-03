@@ -14,11 +14,18 @@ public class PlaceBlock : NetworkBehaviour
     private GameObject spawnedFrame;
 
     private float dist = 10f;
-    private int snowCost = 3;
+    private int maxSnowCost = 3;
+    private int currentSnowCost;
 
     private int maxBlocks = 8;
-    [SyncVar]
     private int placedBlocks = 0;
+
+    private void Start()
+    {
+        if (!isServerOnly) return;
+
+        currentSnowCost = maxSnowCost;
+    }
 
     void Update()
     {
@@ -28,7 +35,6 @@ public class PlaceBlock : NetworkBehaviour
         if (spawnedFrame != null) {
             MoveFrame();
             if (Input.GetKeyDown(KeyCode.Mouse1)) {
-                Debug.Log("Place Block");
                 CmdPlace(GetComponent<NetworkIdentity>(), spawnedFrame.transform.position, spawnedFrame.transform.rotation);
             }
         }
@@ -37,9 +43,12 @@ public class PlaceBlock : NetworkBehaviour
     [Command]
     private void CmdPlace(NetworkIdentity player, Vector3 framePos, Quaternion frameRot)
     {
-        if (!(GetComponent<SnowGauge>().Has(snowCost) && placedBlocks < maxBlocks)) return;
+        if (placedBlocks == maxBlocks) {
+            RpcMessage(player, $"You have placed a maximum of {maxBlocks} blocks", 3);
+            return;
+        } else if (!GetComponent<SnowGauge>().Has(currentSnowCost)) return;
 
-        GetComponent<SnowGauge>().UseSnow(snowCost);
+        GetComponent<SnowGauge>().UseSnow(currentSnowCost);
         GameObject block = (Instantiate(snowBlockPrefab, framePos + (Vector3.up * 1), frameRot));
         SnowBlock snowBlock = block.GetComponent<SnowBlock>();
         RandomRotate(block.transform);
@@ -50,6 +59,7 @@ public class PlaceBlock : NetworkBehaviour
         RpcToggleFrame(GetComponent<NetworkIdentity>().connectionToServer);
     }
 
+    [Server]
     private void BlockDestroyed(SnowBlock block)
     {
         placedBlocks--;
@@ -89,5 +99,12 @@ public class PlaceBlock : NetworkBehaviour
     private void RpcToggleFrame(NetworkConnection conn)
     {
         ToggleFrame();
+    }
+
+    [TargetRpc]
+    private void RpcMessage(NetworkIdentity conn, string message, int duration)
+    {
+        MessageAnnoncer.Duration = duration;
+        MessageAnnoncer.Message = message;
     }
 }
