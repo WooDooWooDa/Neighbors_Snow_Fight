@@ -59,8 +59,10 @@ public class GameManager : NetworkBehaviour
     [Server]
     private void StartGame()
     {
-        if (isServerOnly)
+        if (isServerOnly) {
+            Cursor.lockState = CursorLockMode.None;
             StartCoroutine(GameLoop());
+        }
     }
 
     [Server]
@@ -78,6 +80,10 @@ public class GameManager : NetworkBehaviour
         yield return StartCoroutine(PrepPhase());
         yield return StartCoroutine(RoundPlaying());
         yield return StartCoroutine(RoundEnd());
+
+        //return to lobby
+        NetworkRoomManager lobby = FindObjectOfType<NetworkRoomManager>();
+        lobby.ServerChangeScene(lobby.RoomScene);
     }
 
     [Server]
@@ -130,6 +136,7 @@ public class GameManager : NetworkBehaviour
         foreach (var player in players) {
             RpcGameOverWL(player.GetComponent<NetworkIdentity>().connectionToClient, player.GetComponent<Score>() == winner);
         }
+        yield return new WaitForSeconds(4);
     }
 
     private void Update()
@@ -239,6 +246,7 @@ public class GameManager : NetworkBehaviour
     [TargetRpc]
     private void RpcGameOverWL(NetworkConnection conn, bool winner)
     {
+        Cursor.lockState = CursorLockMode.None;
         if (winner) {
             MessageAnnoncer.Message = "You are the winner!!";
             soundSource.clip = winSound;

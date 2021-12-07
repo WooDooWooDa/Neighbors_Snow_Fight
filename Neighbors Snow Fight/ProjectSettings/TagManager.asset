@@ -16,7 +16,7 @@ TagManager:
   - SnowLayer
   - SnowGolem
   - Bound
-  - 
+  - BG
   - 
   - 
   - 
@@ -38,9 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 3657668569
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer
+  - name: UI
     uniqueID: 1283699383
     locked: 0

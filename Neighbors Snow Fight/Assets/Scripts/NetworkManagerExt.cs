@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class NetworkManagerExt : NetworkManager
 {
-    public override void OnServerAddPlayer(NetworkConnection player)
+    private void OnPlayerConnected(NetworkIdentity player)
     {
-        base.OnServerAddPlayer(player);
-        Debug.LogWarning("Player connected");
+        Debug.Log("Player connected");
+    }
+
+    private void OnPlayerDisconnected(NetworkIdentity player)
+    {
+        Debug.Log("Player disconnected");
     }
 }
