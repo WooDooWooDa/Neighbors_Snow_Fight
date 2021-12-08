@@ -136,7 +136,7 @@ AudioSource:
   m_GameObject: {fileID: 1033297957}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d7208be2b3127db47b232c1dbd172ddf, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.1
@@ -5067,7 +5067,7 @@ AudioSource:
   m_GameObject: {fileID: 1352387355}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d7208be2b3127db47b232c1dbd172ddf, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -5208,6 +5208,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   players: []
+  minPlayers: 2
   maxPlayers: 2
   musicSource: {fileID: 1033297959}
   waitingMusic: {fileID: 8300000, guid: 96d91659a36dc684cb4c75bbb53a02a1, type: 3}
@@ -5221,7 +5222,8 @@ MonoBehaviour:
   tieSound: {fileID: 8300000, guid: 764a8ea81da97bb40b4ed8d8ea713327, type: 3}
   winSound: {fileID: 8300000, guid: c39c13006c81fed44ba47ef86b91fd7c, type: 3}
   loseSound: {fileID: 8300000, guid: 166614447efb59f47aeb0575e3dcc4f3, type: 3}
-  maxGameTime: 120
+  prepPhaseTme: 30
+  GameTime: 120
   snowStormTime: 60
 --- !u!114 &2831546124966225274
 MonoBehaviour:
@@ -5252,8 +5254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b085e2ec4d8539247b1fe7fe84fea1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   snowLayerPrefab: {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
   start: {fileID: 0}
+  startIdentity: {fileID: 0}
 --- !u!114 &641882298
 MonoBehaviour:
   m_ObjectHideFlags: 0

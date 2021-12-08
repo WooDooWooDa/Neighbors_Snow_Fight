@@ -8,6 +8,8 @@ public class Crossair : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI crossair;
 
+    
+
     private void Start()
     {
         SetColor(new Color(PlayerPrefs.GetFloat("crossairColorR", 0), PlayerPrefs.GetFloat("crossairColorG", 0), PlayerPrefs.GetFloat("crossairColorB", 0)));

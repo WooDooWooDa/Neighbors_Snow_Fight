@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0008510157, g: 0.0018434842, b: 0.054547586, a: 1}
+  m_IndirectSpecularColor: {r: 0.0007200191, g: 0.0018433576, b: 0.05432608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3618,15 +3618,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: GameTime
-      value: 10
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: maxPlayers
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: minPlayers
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: maxGameTime
@@ -3634,11 +3634,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: prepPhaseTme
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2831546124966225277, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
       propertyPath: snowStormTime
-      value: 1
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3238c54344214b4b8bd718c4ca43dcd, type: 3}
