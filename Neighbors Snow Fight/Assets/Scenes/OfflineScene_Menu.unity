@@ -2082,7 +2082,7 @@ MonoBehaviour:
   - {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
   - {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
   showRoomGUI: 1
-  minPlayers: 1
+  minPlayers: 2
   roomPlayerPrefab: {fileID: 4843921714885702579, guid: 261f162786262fe45be1656b102ec19b, type: 3}
   RoomScene: Assets/Scenes/OnlineScene_Lobby.unity
   GameplayScene: Assets/Scenes/GameplayScene_Map1.unity
