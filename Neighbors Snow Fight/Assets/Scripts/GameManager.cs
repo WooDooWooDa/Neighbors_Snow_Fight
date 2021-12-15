@@ -143,6 +143,12 @@ public class GameManager : NetworkBehaviour
     {
         if (!isServerOnly) return;
 
+        GetPlayers();
+        if (players.Length < minPlayers) {
+            currentGameTime = 0;
+            return;
+        } 
+
         if (!roundIsPlaying && !prepPhaseIsRunning) return;
         
         UpdateTime();

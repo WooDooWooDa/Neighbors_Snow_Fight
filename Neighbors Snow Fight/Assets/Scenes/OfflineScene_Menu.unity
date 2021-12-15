@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad585a7d10bbcc244a5e5e169baa982e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 938957799}
+  networkManager: {fileID: 0}
   options: {fileID: 1653876046}
 --- !u!1 &541889920
 GameObject:
@@ -2001,9 +2001,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 938957800}
-  - component: {fileID: 938957799}
   - component: {fileID: 938957798}
-  - component: {fileID: 938957801}
+  - component: {fileID: 938957799}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -2023,7 +2022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Port: 7777
+  Port: 80
   DualMode: 1
   NoDelay: 1
   Interval: 10
@@ -2045,7 +2044,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 938957797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c96e6dd99826849ab1431f94547141, type: 3}
+  m_Script: {fileID: 11500000, guid: 95afe1aa6b7ff5741a35307a8927b6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
@@ -2056,13 +2055,19 @@ MonoBehaviour:
   offlineScene: Assets/Scenes/OfflineScene_Menu.unity
   onlineScene: Assets/Scenes/OnlineScene_Lobby.unity
   transport: {fileID: 938957798}
-  networkAddress: localhost
-  maxConnections: 100
+  networkAddress: 159.203.6.221
+  maxConnections: 2
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 4436386201885349399, guid: 5dfc0a249e683f44997f58efdf52e095, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
   spawnPrefabs:
+  - {fileID: 1281196632999510349, guid: 14d7106411b84844fbb68a1fe51e8665, type: 3}
+  - {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
+  - {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
+  - {fileID: 7255915475132775733, guid: 9ecef849e5cf0db48ac15a57473e34e8, type: 3}
+  - {fileID: 8672977967205675955, guid: c1c1137bcf486be40806031667f3927f, type: 3}
+  - {fileID: 7402375060817853922, guid: f09a92b4dc539d142971f47a3d5c62ae, type: 3}
   - {fileID: 645023122099753340, guid: 9990cb6284ada004c8504c2ad189aa57, type: 3}
   - {fileID: 3587089391968711482, guid: 05ca7d43ac0976740aa257a2382ed7c4, type: 3}
   - {fileID: 1587030568101803722, guid: 0518fbcf82f30444ba814cd0a666c702, type: 3}
@@ -2075,15 +2080,9 @@ MonoBehaviour:
   - {fileID: 7857840955524290171, guid: ef34b8530b8a33e4cac9cdfb01e8a9cc, type: 3}
   - {fileID: 3987830856971460964, guid: 0e99c066476d0bc4f93b8ad89d811da6, type: 3}
   - {fileID: 4383698760584227054, guid: 2fa244a4647de8c45b5b19c33954225d, type: 3}
-  - {fileID: 7255915475132775733, guid: 9ecef849e5cf0db48ac15a57473e34e8, type: 3}
-  - {fileID: 8672977967205675955, guid: c1c1137bcf486be40806031667f3927f, type: 3}
-  - {fileID: 7402375060817853922, guid: f09a92b4dc539d142971f47a3d5c62ae, type: 3}
-  - {fileID: 1281196632999510349, guid: 14d7106411b84844fbb68a1fe51e8665, type: 3}
-  - {fileID: 8346000117616226056, guid: 05307c4110409a34d9bdc4666589a90e, type: 3}
-  - {fileID: 6016405581023419880, guid: e27adce6110677b4d82d3f193661d187, type: 3}
   showRoomGUI: 1
   minPlayers: 2
-  roomPlayerPrefab: {fileID: 4843921714885702579, guid: 261f162786262fe45be1656b102ec19b, type: 3}
+  roomPlayerPrefab: {fileID: -3996671232777416354, guid: 261f162786262fe45be1656b102ec19b, type: 3}
   RoomScene: Assets/Scenes/OnlineScene_Lobby.unity
   GameplayScene: Assets/Scenes/GameplayScene_Map1.unity
   _allPlayersReady: 0
@@ -2103,20 +2102,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &938957801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938957797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 0
 --- !u!1 &976030392
 GameObject:
   m_ObjectHideFlags: 0

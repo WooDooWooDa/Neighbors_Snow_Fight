@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1674521527803553689}
   - component: {fileID: 2453778623257663600}
-  - component: {fileID: 4843921714885702579}
+  - component: {fileID: -3996671232777416354}
   m_Layer: 0
   m_Name: RoomPlayer
   m_TagString: Untagged
@@ -47,9 +47,9 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: 261f162786262fe45be1656b102ec19b
   hasSpawned: 0
---- !u!114 &4843921714885702579
+--- !u!114 &-3996671232777416354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3406276406672655868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79874ac94d5b1314788ecf0e86bd23fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 59975c0510c42274895cfd2f5b1e2fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
